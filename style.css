@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+div.news {
+    height: 300px;
+    border: 5px solid gray;
+    padding: 50px;
+    margin: 20px;
+  }
+=======
 
 .header {
     text-align: center;
@@ -16,6 +24,7 @@ footer {
 
 
 
+>>>>>>> e771b2bd5f0e7a44975b4eaf0c4420d1b8d8e70a
 .card {
 
 height: 400px;
@@ -25,4 +34,7 @@ padding:20px;
 margin: 20px;
 
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> e771b2bd5f0e7a44975b4eaf0c4420d1b8d8e70a
