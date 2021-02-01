@@ -1,3 +1,21 @@
+
+.header {
+    text-align: center;
+    background-color: lightgreen;
+    padding: 20px;
+    font-family: fantasy;
+}
+
+h1 {
+    color: green
+}
+
+footer {
+    position: sticky;
+    bottom: 0;}
+
+
+
 .card {
 
 height: 400px;
@@ -7,3 +25,4 @@ padding:20px;
 margin: 20px;
 
 }
+
