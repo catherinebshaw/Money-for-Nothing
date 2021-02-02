@@ -1,13 +1,10 @@
+var query
 
-
-
-
-
-
-
-
-
-
+function searchButton(event) {
+    event.preventDefault()
+    query = document.querySelector('#input').value
+    console.log(`You searched for "${query}"`)
+}
 
 
 
@@ -35,9 +32,15 @@ function btnClick(){
 
 ///Watchlist JS
 
+<<<<<<< HEAD
 var watchList
 
 function dashboardList(item){
     document.querySelector('ul').innerHTML += `<button><li class="list-group-item">${item}</li></button>`
   }
 
+=======
+function dashboardList(item) {
+    document.querySelector('ul').innerHTML += `<button><li class="list-group-item">${item}</li></button>`
+}
+>>>>>>> main
