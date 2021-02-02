@@ -32,15 +32,6 @@ function btnClick(){
 
 ///Watchlist JS
 
-<<<<<<< HEAD
-var watchList
-
-function dashboardList(item){
-    document.querySelector('ul').innerHTML += `<button><li class="list-group-item">${item}</li></button>`
-  }
-
-=======
 function dashboardList(item) {
     document.querySelector('ul').innerHTML += `<button><li class="list-group-item">${item}</li></button>`
 }
->>>>>>> main
