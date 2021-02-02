@@ -29,6 +29,23 @@ margin-right: 0;
 width: 100%;
 
 }
+#companyName {
+    text-align:center;
+}
+h3 {
+    text-align:center;
+
+}
+#news {
+    height: 300px;
+    border: 2px solid gray;
+    background:white;
+    padding:20px;
+    margin: 10px;
+    margin-right: 0;
+    width: 100%;
+
+}
 
 
 
