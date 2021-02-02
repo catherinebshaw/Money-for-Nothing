@@ -10,6 +10,7 @@ var exchange
 var qEarningsGrowthYOY
 var qRevenueGrowthYOY
 var qRevenue
+var compName
 
 getYesterday()
 // Saves the last thing searchd in a variable
@@ -35,6 +36,7 @@ async function companySearch(query) {
   exchange = compInfo.Exchange
   qEarningsGrowthYOY = compInfo.QuarterlyEarningsGrowthYOY
   qRevenueGrowthYOY = compInfo.QuarterlyRevenueGrowthYOY
+  compName = compInfo.Name
   // LOGS INFO TO THE CONSOLE
   console.log(`${query}'s info\nTheir sector is: [${sector}]\nTheir exchange is: [${exchange}]\nTheir Quarter Earnings is: [${qEarningsGrowthYOY}]\nTheir Quarterly Revenue Growth is: [${qRevenueGrowthYOY}]`)
 
@@ -68,6 +70,8 @@ function changeCompInfo() {
   document.querySelector('#dateNow').innerHTML = `As of: <strong>${isoDatefix}</strong>`
   // Dispalys the latest Closing Price
   document.querySelector('#sharePrice').innerHTML = `Share Price: <strong>${closeingPrice}</strong>`
+  // Dispalys the latest Closing Price
+  document.querySelector('#companyName').innerHTML = `${compName}`
 }
 
 
