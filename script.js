@@ -22,7 +22,10 @@
 
 
 
-
+//search function
+function btnClick(){
+  console.log("Search Button has been clicked")
+}
 
 
 
