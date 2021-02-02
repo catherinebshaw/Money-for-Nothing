@@ -19,8 +19,11 @@ function searchButton(event) {
 
 
 
-
-
+//search function
+function btnClick(){
+  console.log("Search Button has been clicked")
+  var serach = document.querySelector.
+}
 
 
 
@@ -29,6 +32,15 @@ function searchButton(event) {
 
 ///Watchlist JS
 
+<<<<<<< HEAD
+var watchList
+
+function dashboardList(item){
+    document.querySelector('ul').innerHTML += `<button><li class="list-group-item">${item}</li></button>`
+  }
+
+=======
 function dashboardList(item) {
     document.querySelector('ul').innerHTML += `<button><li class="list-group-item">${item}</li></button>`
 }
+>>>>>>> main
