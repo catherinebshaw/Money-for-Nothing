@@ -40,7 +40,7 @@ h3 {
 
 }
 #news {
-    height: 300px;
+    height: auto;
     border: 2px solid gray;
     background:white;
     padding:20px;
@@ -48,6 +48,10 @@ h3 {
     margin-right: 0;
     width: 100%;
 
+}
+
+#newstwo {
+    height: auto;
 }
 
 

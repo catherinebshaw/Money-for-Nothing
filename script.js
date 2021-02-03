@@ -121,3 +121,45 @@ function getYesterday() {
 function dashboardList(item) {
   document.querySelector('ul').innerHTML += `<button><li class="list-group-item">${item}</li></button>`
 }
+
+//NEWS API
+//NEWS API
+//NEWS API
+var news
+var abstract
+var url
+var title
+var hotTitle
+
+
+async function getNews() {
+  news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json()) 
+  console.log(news)
+  for (i = 0; i < 3; i++){
+  
+  title = news.results[i].title
+  console.log(title)
+  url = news.results[i].url
+  hotTitle = title.link(`${url}`)
+  console.log(url)
+  changeNewsInfo()
+
+}}
+
+// Displays news info in a card on screen
+function changeNewsInfo() {
+  // Displays title of News
+  document.querySelector(`#newsstory${i}`).innerHTML += `<strong>${hotTitle}</strong>`
+  // Displays Exchange
+ // document.querySelector(`#cardUrl${i}`).innerHTML += `<strong>${url}</strong>`
+}
+
+getNews()
+
+//Fetch Top Stories News
+// var news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
+
+//Access various variables
+// var title = news.results[0].title
+// var abstract = news.results[0].abstract
+// var url = news.results[0].url
