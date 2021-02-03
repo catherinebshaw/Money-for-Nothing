@@ -1,6 +1,10 @@
 var query
+var userSearched
+
 var stockList
 var compInfo
+var symbolInfo
+var tempName
 
 var closeingPrice
 var yearHigh
@@ -20,16 +24,52 @@ getYesterday()
 // Saves the last thing searched in a variable
 function searchButton(event) {
   event.preventDefault()
-  var tempQuery = `${document.querySelector('#input').value}`
+  userSearched = `${document.querySelector('#input').value}`
   // Query is stored in upper-case. Lower-case was affecting some results
-  query = tempQuery.toUpperCase()
-  console.log(`You searched for "${tempQuery}"`)
+  // query = tempQuery.toUpperCase()
+  console.log(`You searched for "${userSearched}"`)
 
-  // Passes query to  companySearch()
-  companySearch(query)
-  // Passes query to  stockSearch()
-  stockSearch(query)
+  // // Passes query to  companySearch()
+  // companySearch(query)
+  // // Passes query to  stockSearch()
+  // stockSearch(query)
+
+  nameToSymbol(userSearched)
 }
+
+
+async function nameToSymbol(userSearched) {
+  symbolInfo = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${userSearched}&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
+  // console.log(symbolInfo.bestMatches)
+
+  // console.log(symbolInfo.bestMatches[0])
+  console.log(symbolInfo.bestMatches[0]["1. symbol"])
+
+
+  for (var i = 0; i < 3; i++) {
+
+    query = symbolInfo.bestMatches[i]["1. symbol"]
+    tempName = symbolInfo.bestMatches[i]["2. name"]
+    document.querySelector('#searchResultsHere').innerHTML +=
+      `<strong>Symbol:</strong> ${query} <strong>Company Name:</strong> ${tempName}<br>`
+    console.log('Hi')
+  }
+
+
+  // companySearch(query)
+  // stockSearch(query)
+}
+
+function testFunction() {
+  document.querySelector('#testId').innerHTML +=
+    `  <input type="radio" onclick='testFunction()' class="btn-check" name="btnradio" id="btnradio1"
+  autocomplete="off" checked>
+<label id='testId' class="btn btn-outline-primary" for="btnradio1">Company Name, Symbol</label>`
+}
+
+
+
+
 
 
 
