@@ -5,9 +5,11 @@
     padding: 20px;
     font-family: fantasy;
 }
-.watchlist{
-    margin-left: 0;
+
+#watchlist {
+    padding: 20px;
 }
+
 h1 {
     color: green
 }
