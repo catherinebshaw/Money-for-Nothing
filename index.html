@@ -19,7 +19,7 @@
     </div>
     <div class="container">
         <div class="input-group my-3">
-            <input type="text" class="form-control" id="input" placeholder="Enter Stock Here" aria-label="search"
+            <input type="text" class="form-control" id="input" placeholder="Enter Stock Symbol Here" aria-label="search"
                 aria-describedby="search">
             <button onclick="searchButton(event)" class="btn btn-outline-secondary" type="button">Search</button>
         </div>
@@ -45,7 +45,7 @@
                             <div class="card-body" id="porfolio">
                                 <div class="row">
                                     <div class="col-6">
-                                        <p class="card-text" id="cardSector">Sector:</span></p>
+                                        <p class="card-text" id="cardSector">Sector:</p>
                                         <p class="card-text">Exchange: <span id="cardExchange"></span></p>
 
                                         <h5>Year over Year</h5>
@@ -56,6 +56,8 @@
                                     <div class="col-6">
                                         <p id="dateNow">As of: </p>
                                         <p id="sharePrice">Share Price (USD):</p>
+                                        <p id="yearHigh">52 Week High: </p>
+                                        <p id="yearLow">52 Week Low: </p>
                                     </div>
                                 </div>
                             </div>
