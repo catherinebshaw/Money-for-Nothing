@@ -89,6 +89,9 @@ function changeCompInfo() {
   document.querySelector('#yearHigh').innerHTML = `52 Week High: <strong>${yearHigh}</strong>`
   // Dispalys the 52 Week Low
   document.querySelector('#yearLow').innerHTML = `52 Week Low: <strong>${yearLow}</strong>`
+
+  if(`${qEarningsGrowthYOY}`< 0 ) {document.querySelector("#cardQEarnings").style.color = "red"}
+  if(`${qRevenueGrowthYOY}`< 0 ) {document.querySelector("#cardQRevenue").style.color = "red"}
 }
 
 

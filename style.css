@@ -50,8 +50,23 @@ h3 {
 
 }
 
-#newstwo {
-    height: auto;
+#news0 {
+    height: 160px;
+}
+#news1 {
+    height: 160px;
+}
+#news2 {
+    height: 160px;
+}
+
+a {
+    color: white;
+
+}
+
+a:hover {
+    color:black;
 }
 
 
