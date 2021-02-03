@@ -16,7 +16,8 @@ getYesterday()
 // Saves the last thing searchd in a variable
 function searchButton(event) {
   event.preventDefault()
-  query = document.querySelector('#input').value
+  var tempQuery = `${document.querySelector('#input').value}`
+  query = tempQuery.toUpperCase()
   console.log(`You searched for "${query}"`)
 
   // Passes query to  companySearch()
