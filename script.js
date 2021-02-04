@@ -14,7 +14,7 @@ var qEarningsGrowthYOY
 var qRevenueGrowthYOY
 var qRevenue
 var compName
-var LSWL
+
 
 //NEWS API
 var news
@@ -25,17 +25,22 @@ var hotTitle
 
 
 //Infor for Local Storage and Watch List
+var lswl
+var lsCompCheck
+var newCompany 
+
+
 
 
 function LS(){
-  if (LSWL === null ){
-    LSWL = []
+  if (localStorage.getItem('lswl') === null ){
+    console.log(lswl===null)
+    lswl = []
+  } else {
+    lswl = JSON.parse(localStorage.getItem('lswl'))
   }
 }
-
-var LSWL = JSON.parse(localStorage.getItem('LSWL'))
-var newWLItemcheck
-
+console.log(lswl)
 
 // Saves the last thing searched in a variable
 function searchButton(event) {
@@ -147,18 +152,203 @@ function changeNewsInfo() {
 }
 
 
+
+
+
+
+
+LS()
+watchlist()
+getNews()
+getYesterday()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//bills code
+console.log(lswl)
+
 // Scan local storage
 function checkLS(compName){
   // check to see if company is already on watch list     
   console.log(`${compName}`)
   // if result is less than 0 not on the list
-  newWLItemcheck = LSWL.indexOf(`${compName}`)
-  console.log(newWLItemcheck)
+  lsCompCheck = lswl.indexOf(`${compName}`)
+  console.log(lsCompCheck)
   // change wachlist button color and text
-  if (newWLItemcheck >= 0){
-    console.log(newWLItemcheck<1)
-    console.log(newWLItemcheck)
-    console.log(typeof(newWLItemcheck))
+  if (lsCompCheck >= 0){
+    console.log(lsCompCheck<1)
+    console.log(lsCompCheck)
+    console.log(typeof(lsCompCheck))
     
     document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger")
     document.querySelector('.wlbtn').innerHTML = "- from Watchlist"
@@ -168,10 +358,8 @@ function checkLS(compName){
   }
 }
 
-
-
-// Watchlist button trigger (add or remove from list)
-function watchListBtn(event){
+ // Watchlist button trigger (add or remove from list)
+ function watchListBtn(event){
   console.log("Watch List button pressed")
   var wlbtnresults = document.querySelector('.wlbtn').innerText
   if(wlbtnresults === "+ to Watchlist"){
@@ -182,15 +370,16 @@ function watchListBtn(event){
     removeLocalStorage()
   }  
 }
-var newCompany 
+
+
 // save items to local storage
 function addLocalStorage(){
   console.log("add Local Storage function started")
   // pull Local Storage if exists
-  if(localStorage.getItem("LSWL")=== null){
-    LSWL = [];
+  if(localStorage.getItem("lswl")=== null){
+    lswl = [];
   } else {
-    LSWL = JSON.parse(localStorage.getItem('LSWL'));
+    lswl = JSON.parse(localStorage.getItem('lswl'));
   }
 
   newCompany = {
@@ -200,56 +389,44 @@ function addLocalStorage(){
 
   // if section is not blank proceed else stop
   if (compName != null ) {
-    LSWL.push(newCompany);
+    lswl.push(newCompany);
   } else {alert("Search for a company using the search bar")
   }
   // Push updated array with new item back to Local Storage
-  localStorage.setItem('LSWL', JSON.stringify(LSWL));
+  localStorage.setItem('lswl', JSON.stringify(lswl));
   watchlist()
 }
 
 // remove from local storage
 function removeLocalStorage(){
- 
+
   console.log("remove Local Storage function started")
   console.log(newWLItemcheck)
-  LSWL = JSON.parse(localStorage.getItem('LSWL'));
-  LSWLnew = LSWL.splice(newWLItemcheck,1)
-  localStorage.setItem('LSWL', JSON.stringify(LSWL));
-  console.log(LSWL)
+  lswl = JSON.parse(localStorage.getItem('lswl'));
+  lswlnew = lswl.splice(newWLItemcheck,1)
+  localStorage.setItem('LSWL', JSON.stringify(lswl));
+  console.log(lswl)
   watchlist()
 }
 
-
-// Add to  Watchlist
+    // Add to  Watchlist
 function watchlist(){
   document.querySelector('.list-group').innerHTML = ""
-  LSWL = JSON.parse(localStorage.getItem('LSWL'))
-  console.log(LSWL)
- 
-  var LSWLLength = LSWL.length
-  console.log(LSWL)
-  console.log(LSWLLength)
-  for (i=0; i < LSWLLength; i++){
-    document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${LSWL[i].name} - ${LSWL[i].ticker}</button></li>`
+  lswl = JSON.parse(localStorage.getItem('lswl'))
+  console.log(lswl)
+  
+  var lswlLength = lswl.length
+  console.log(lswl)
+  console.log(lswlLength)
+  for (i=0; i < lswlLength; i++){
+    document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${lswl[i].name} - ${lswl[i].ticker}</button></li>`
   }
 }
 
-//when the watchlist button is pushed, pass the company name via the search function trigger
+  //when the watchlist button is pushed, pass the company name via the search function trigger
   function wlBtnSearch(event){
     console.log("WL button click")
     var wlbSearch = document.querySelector(".wlBtn").innerText
     console.log(wlbSearch)
     stockSearch(wlbSearch)
   }
-
-//Infor for Local Storage and Watch List
-
-
-
-
-LS()
-watchlist()
-getNews()
-getYesterday()
-
