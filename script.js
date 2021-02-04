@@ -14,8 +14,20 @@ var qEarningsGrowthYOY
 var qRevenueGrowthYOY
 var qRevenue
 var compName
+var LSWL
 
-getYesterday()
+//NEWS API
+var news
+var abstract
+var url
+var title
+var hotTitle
+
+
+//Infor for Local Storage and Watch List
+var LSWL = JSON.parse(localStorage.getItem('LSWL'))
+var newWLItemcheck
+
 
 // Saves the last thing searched in a variable
 function searchButton(event) {
@@ -53,6 +65,9 @@ async function companySearch(query) {
   // LOGS INFO TO THE CONSOLE
   console.log(`${query}'s info\nTheir sector is: [${sector}]\nTheir exchange is: [${exchange}]\nTheir Quarter Earnings is: [${qEarningsGrowthYOY}]\nTheir Quarterly Revenue Growth is: [${qRevenueGrowthYOY}]`)
   console.log('query')
+
+  // Check Local Storage for company
+  checkLS(compName)
 }
 
 // Uses query to find they previous day's closing price
@@ -94,24 +109,6 @@ function changeCompInfo() {
   if(`${qRevenueGrowthYOY}`< 0 ) {document.querySelector("#cardQRevenue").style.color = "red"}
 }
 
-
-
-
-
-
-
-
-
-//Fetch Top Stories News
-// var news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
-
-//Access various variables
-// var title = news.results[0].title
-// var abstract = news.results[0].abstract
-// var url = news.results[0].url
-
-//Access 3 Top News Articles
-
 function getYesterday() {
   var day = new Date()
   var yesteday = day.setDate(day.getDate() - 1)
@@ -119,22 +116,8 @@ function getYesterday() {
   isoDatefix = isoDate.slice(0, 10)
   console.log(`The previous day is: ${isoDatefix}`);
 }
-///Watchlist JS
 
-function dashboardList(item) {
-  document.querySelector('ul').innerHTML += `<button><li class="list-group-item">${item}</li></button>`
-}
-
-//NEWS API
-//NEWS API
-//NEWS API
-var news
-var abstract
-var url
-var title
-var hotTitle
-
-
+// get news API
 async function getNews() {
   news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json()) 
   console.log(news)
@@ -153,16 +136,101 @@ async function getNews() {
 function changeNewsInfo() {
   // Displays title of News
   document.querySelector(`#newsstory${i}`).innerHTML += `<strong>${hotTitle}</strong>`
-  // Displays Exchange
- // document.querySelector(`#cardUrl${i}`).innerHTML += `<strong>${url}</strong>`
 }
 
+
+// Scan local storage
+function checkLS(compName){
+  // check to see if company is already on watch list     
+  console.log(`${compName}`)
+  // if result is less than 0 not on the list
+  newWLItemcheck = LSWL.indexOf(`${compName}`)
+  console.log(newWLItemcheck)
+  // change wachlist button color and text
+  if (newWLItemcheck >= 0){
+    console.log(newWLItemcheck<1)
+    console.log(newWLItemcheck)
+    console.log(typeof(newWLItemcheck))
+    
+    document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger")
+    document.querySelector('.wlbtn').innerHTML = "- from Watchlist"
+  } else {
+    document.querySelector('.wlbtn').classList.replace("btn-danger","btn-success")
+    document.querySelector('.wlbtn').innerHTML = "+ to Watchlist"
+  }
+}
+
+
+
+// Watchlist button trigger (add or remove from list)
+function watchListBtn(event){
+  console.log("Watch List button pressed")
+  var wlbtnresults = document.querySelector('.wlbtn').innerText
+  if(wlbtnresults === "+ to Watchlist"){
+    console.log("good to go")
+    addLocalStorage()
+  } else {
+    console.log("no go")
+    removeLocalStorage()
+  }  
+}
+
+// save items to local storage
+function addLocalStorage(){
+  console.log("add Local Storage function started")
+  // pull Local Storage if exists
+  if(localStorage.getItem("LSWL")=== null){
+    LSWL = [];
+  } else {
+    LSWL = JSON.parse(localStorage.getItem('LSWL'));
+  }
+  // if section is not blank proceed else stop
+  if (compName != null ) {
+    LSWL.push(compName);
+  } else {alert("Search for a company using the search bar")
+  }
+  // Push updated array with new item back to Local Storage
+  localStorage.setItem('LSWL', JSON.stringify(LSWL));
+  watchlist()
+}
+
+// remove from local storage
+function removeLocalStorage(){
+  // test()
+  console.log("remove Local Storage function started")
+  console.log(newWLItemcheck)
+  LSWL = JSON.parse(localStorage.getItem('LSWL'));
+  LSWLnew = LSWL.splice(newWLItemcheck,1)
+  localStorage.setItem('LSWL', JSON.stringify(LSWL));
+  console.log(LSWL)
+  watchlist()
+}
+
+
+// Add to  Watchlist
+function watchlist(){
+  document.querySelector('.list-group').innerHTML = ""
+  var LSWLLength = LSWL.length
+  for (i=0; i < LSWLLength; i++){
+    document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${LSWL[i]}</button></li>`
+  }
+}
+watchlist()
+
+//when the watchlist button is pushed, pass the company name via the search function trigger
+  function wlBtnSearch(event){
+    console.log("WL button click")
+    var wlbSearch = document.querySelector(".wlBtn").innerText
+    console.log(wlbSearch)
+    stockSearch(wlbSearch)
+  }
+
+//Infor for Local Storage and Watch List
+
+
+
+
+
+
 getNews()
-
-//Fetch Top Stories News
-// var news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
-
-//Access various variables
-// var title = news.results[0].title
-// var abstract = news.results[0].abstract
-// var url = news.results[0].url
+getYesterday()
