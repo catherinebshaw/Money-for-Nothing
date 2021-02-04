@@ -1,7 +1,7 @@
 
 .header {
     text-align: center;
-    background-color: lightgreen;
+    background-color: rgb(4, 58, 28);
     padding: 20px;
     font-family: fantasy;
 }
@@ -12,7 +12,7 @@
 }
 
 h1 {
-    color: green
+    color: white;
 }
 
 footer {
@@ -52,9 +52,9 @@ h3 {
 
 body {
     background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSQtxAPhoecrv8emMhad9plBYTapxg3DUTyQ&usqp=CAU);
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-attachment: fixed;
-    background-size: cover;
+    background-size: auto;
     }
 
 #news0 {
