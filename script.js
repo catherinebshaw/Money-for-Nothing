@@ -19,7 +19,14 @@ var qRevenueGrowthYOY
 var qRevenue
 var compName
 
-getYesterday()
+//NEWS API
+var news
+var abstract
+var url
+var title
+var hotTitle
+
+
 
 // Saves the last thing searched in a variable
 function searchButton(event) {
@@ -37,7 +44,7 @@ function searchButton(event) {
   nameToSymbol(userSearched)
 }
 
-
+// ------------------------------------------------USER SEARCH & SEARCH OPTIONS----------------------------------------------------------------------------
 async function nameToSymbol(userSearched) {
   symbolInfo = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${userSearched}&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
   // console.log(symbolInfo.bestMatches)
@@ -49,7 +56,7 @@ async function nameToSymbol(userSearched) {
 
     query = symbolInfo.bestMatches[i]["1. symbol"]
     tempName = symbolInfo.bestMatches[i]["2. name"]
-    testFunction(query)
+    createSearchOptions(query)
     console.log('Hi')
   }
 
@@ -58,36 +65,24 @@ async function nameToSymbol(userSearched) {
   // stockSearch(query)
 }
 
-function testFunction(query) {
+function createSearchOptions(query) {
   document.querySelector('#btnGroup').innerHTML +=
-    // `<input type="checkbox" class="btn-check" id="btn-check-2-outlined" checked autocomplete="off">
-    // <label class="btn btn-outline-secondary" for="btn-check-2-outlined"><strong>Symbol:</strong> ${query} <strong>Company Name:</strong> ${tempName}<br></label><br>
-    // `
+    // Creates button for current query
     `
-    <div class="btn-group stock" role="group" aria-label="Basic radio toggle button group">
-  <button  onclick="testTwo('${query}')" type="button" class="btn btn-outline-secondary"><strong>Symbol:</strong> ${query} <strong>Company Name:</strong> ${tempName}</button>
-</div>`
+    <button  onclick="runFromOption('${query}')" type="button" class="btn btn-secondary mx-1"><strong>Symbol:</strong> ${query} <strong>Company Name:</strong> ${tempName}</button>
+    `
 }
-
-// ========================================NO MANS LAND=========================================================
-
-
-
-function testTwo(query) {
+// Presents information depending on which search optin use selects
+function runFromOption(query) {
   companySearch(query)
   stockSearch(query)
 }
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
-
-//==============================================================================================================
-
-
-
-
-
+//-----------------------------------------------FINDING & DISPLAYING COMPANY INFO--------------------------------------------------------------------------
 // Uses the query to find the searched companies' information
 async function companySearch(query) {
   // API query is saved to a variable
@@ -146,24 +141,7 @@ function changeCompInfo() {
   if (`${qEarningsGrowthYOY}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
   if (`${qRevenueGrowthYOY}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
 }
-
-
-
-
-
-
-
-
-
-//Fetch Top Stories News
-// var news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
-
-//Access various variables
-// var title = news.results[0].title
-// var abstract = news.results[0].abstract
-// var url = news.results[0].url
-
-//Access 3 Top News Articles
+//------------------------------------------------------------------------------------------------------------------------------------------
 
 function getYesterday() {
   var day = new Date()
@@ -178,16 +156,8 @@ function dashboardList(item) {
   document.querySelector('ul').innerHTML += `<button><li class="list-group-item">${item}</li></button>`
 }
 
-//NEWS API
-//NEWS API
-//NEWS API
-var news
-var abstract
-var url
-var title
-var hotTitle
 
-
+//---------------------------------------------NEWS STUFF-------------------------------------------------------------------------------------
 async function getNews() {
   news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
   console.log(news)
@@ -211,12 +181,8 @@ function changeNewsInfo() {
   // document.querySelector(`#cardUrl${i}`).innerHTML += `<strong>${url}</strong>`
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------
+
+getYesterday()
 getNews()
 
-//Fetch Top Stories News
-// var news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
-
-//Access various variables
-// var title = news.results[0].title
-// var abstract = news.results[0].abstract
-// var url = news.results[0].url
