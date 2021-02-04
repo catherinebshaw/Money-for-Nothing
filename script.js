@@ -64,7 +64,7 @@ function testFunction(query) {
     // <label class="btn btn-outline-secondary" for="btn-check-2-outlined"><strong>Symbol:</strong> ${query} <strong>Company Name:</strong> ${tempName}<br></label><br>
     // `
     `
-    <div id="btnGroup" class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <div id="stock" class="btn-group" role="group" aria-label="Basic radio toggle button group">
   <button  onclick="testTwo(${query})" type="button" class="btn btn-outline-secondary"><strong>Symbol:</strong> ${query} <strong>Company Name:</strong> ${tempName}</button>
 </div>`
 }
