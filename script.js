@@ -41,7 +41,6 @@ function searchButton(event) {
 async function nameToSymbol(userSearched) {
   symbolInfo = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${userSearched}&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
   // console.log(symbolInfo.bestMatches)
-
   // console.log(symbolInfo.bestMatches[0])
   console.log(symbolInfo.bestMatches[0]["1. symbol"])
 
@@ -50,8 +49,7 @@ async function nameToSymbol(userSearched) {
 
     query = symbolInfo.bestMatches[i]["1. symbol"]
     tempName = symbolInfo.bestMatches[i]["2. name"]
-    document.querySelector('#searchResultsHere').innerHTML +=
-      `<strong>Symbol:</strong> ${query} <strong>Company Name:</strong> ${tempName}<br>`
+    testFunction(query)
     console.log('Hi')
   }
 
@@ -60,11 +58,24 @@ async function nameToSymbol(userSearched) {
   // stockSearch(query)
 }
 
-function testFunction() {
-  document.querySelector('#testId').innerHTML +=
-    `  <input type="radio" onclick='testFunction()' class="btn-check" name="btnradio" id="btnradio1"
-  autocomplete="off" checked>
-<label id='testId' class="btn btn-outline-primary" for="btnradio1">Company Name, Symbol</label>`
+function testFunction(query) {
+  document.querySelector('#btnGroup').innerHTML +=
+    // `<input type="checkbox" class="btn-check" id="btn-check-2-outlined" checked autocomplete="off">
+    // <label class="btn btn-outline-secondary" for="btn-check-2-outlined"><strong>Symbol:</strong> ${query} <strong>Company Name:</strong> ${tempName}<br></label><br>
+    // `
+    `
+    <div id="btnGroup" class="btn-group" role="group" aria-label="Basic radio toggle button group">
+  <button  onclick="testTwo(${query})" type="button" class="btn btn-outline-secondary"><strong>Symbol:</strong> ${query} <strong>Company Name:</strong> ${tempName}</button>
+</div>`
+}
+
+
+function testTwo(query) {
+  printQuery(query)
+}
+
+function printQuery(query) {
+  console.log(query)
 }
 
 
@@ -130,8 +141,8 @@ function changeCompInfo() {
   // Dispalys the 52 Week Low
   document.querySelector('#yearLow').innerHTML = `52 Week Low: <strong>${yearLow}</strong>`
 
-  if(`${qEarningsGrowthYOY}`< 0 ) {document.querySelector("#cardQEarnings").style.color = "red"}
-  if(`${qRevenueGrowthYOY}`< 0 ) {document.querySelector("#cardQRevenue").style.color = "red"}
+  if (`${qEarningsGrowthYOY}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
+  if (`${qRevenueGrowthYOY}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
 }
 
 
@@ -176,25 +187,26 @@ var hotTitle
 
 
 async function getNews() {
-  news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json()) 
+  news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
   console.log(news)
-  for (i = 0; i < 3; i++){
-  
-  title = news.results[i].title
-  console.log(title)
-  url = news.results[i].url
-  hotTitle = title.link(`${url}`)
-  console.log(url)
-  changeNewsInfo()
+  for (i = 0; i < 3; i++) {
 
-}}
+    title = news.results[i].title
+    console.log(title)
+    url = news.results[i].url
+    hotTitle = title.link(`${url}`)
+    console.log(url)
+    changeNewsInfo()
+
+  }
+}
 
 // Displays news info in a card on screen
 function changeNewsInfo() {
   // Displays title of News
   document.querySelector(`#newsstory${i}`).innerHTML += `<strong>${hotTitle}</strong>`
   // Displays Exchange
- // document.querySelector(`#cardUrl${i}`).innerHTML += `<strong>${url}</strong>`
+  // document.querySelector(`#cardUrl${i}`).innerHTML += `<strong>${url}</strong>`
 }
 
 getNews()
