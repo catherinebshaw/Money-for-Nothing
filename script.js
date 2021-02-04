@@ -25,6 +25,14 @@ var hotTitle
 
 
 //Infor for Local Storage and Watch List
+
+
+function LS(){
+  if (LSWL === null ){
+    LSWL = []
+  }
+}
+
 var LSWL = JSON.parse(localStorage.getItem('LSWL'))
 var newWLItemcheck
 
@@ -196,7 +204,7 @@ function addLocalStorage(){
 
 // remove from local storage
 function removeLocalStorage(){
-  // test()
+ 
   console.log("remove Local Storage function started")
   console.log(newWLItemcheck)
   LSWL = JSON.parse(localStorage.getItem('LSWL'));
@@ -215,7 +223,6 @@ function watchlist(){
     document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${LSWL[i]}</button></li>`
   }
 }
-watchlist()
 
 //when the watchlist button is pushed, pass the company name via the search function trigger
   function wlBtnSearch(event){
@@ -230,7 +237,8 @@ watchlist()
 
 
 
-
-
+LS()
+watchlist()
 getNews()
 getYesterday()
+
