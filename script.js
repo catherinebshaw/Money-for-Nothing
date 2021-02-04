@@ -75,7 +75,7 @@ async function companySearch(query) {
   console.log('query')
 
   // Check Local Storage for company
-  checkLS(compName)
+  checkLS(compName, query)
 }
 
 // Uses query to find they previous day's closing price
@@ -182,7 +182,7 @@ function watchListBtn(event){
     removeLocalStorage()
   }  
 }
-
+var newCompany 
 // save items to local storage
 function addLocalStorage(){
   console.log("add Local Storage function started")
@@ -192,9 +192,15 @@ function addLocalStorage(){
   } else {
     LSWL = JSON.parse(localStorage.getItem('LSWL'));
   }
+
+  newCompany = {
+    name: compName,
+    ticker: query,
+  }
+
   // if section is not blank proceed else stop
   if (compName != null ) {
-    LSWL.push(compName);
+    LSWL.push(newCompany);
   } else {alert("Search for a company using the search bar")
   }
   // Push updated array with new item back to Local Storage
@@ -218,9 +224,14 @@ function removeLocalStorage(){
 // Add to  Watchlist
 function watchlist(){
   document.querySelector('.list-group').innerHTML = ""
+  LSWL = JSON.parse(localStorage.getItem('LSWL'))
+  console.log(LSWL)
+ 
   var LSWLLength = LSWL.length
+  console.log(LSWL)
+  console.log(LSWLLength)
   for (i=0; i < LSWLLength; i++){
-    document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${LSWL[i]}</button></li>`
+    document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${LSWL[i].name} - ${LSWL[i].ticker}</button></li>`
   }
 }
 
