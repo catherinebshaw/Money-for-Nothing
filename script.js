@@ -1,6 +1,10 @@
 var query
+var userSearched
+
 var stockList
 var compInfo
+var symbolInfo
+var tempName
 
 var closeingPrice
 var yearHigh
@@ -27,8 +31,8 @@ var hotTitle
 //Infor for Local Storage and Watch List
 
 
-function LS(){
-  if (LSWL === null ){
+function LS() {
+  if (LSWL === null) {
     LSWL = []
   }
 }
@@ -40,21 +44,58 @@ var newWLItemcheck
 // Saves the last thing searched in a variable
 function searchButton(event) {
   event.preventDefault()
-  var tempQuery = `${document.querySelector('#input').value}`
+  userSearched = `${document.querySelector('#input').value}`
   // Query is stored in upper-case. Lower-case was affecting some results
-  query = tempQuery.toUpperCase()
-  console.log(`You searched for "${tempQuery}"`)
+  // query = tempQuery.toUpperCase()
+  console.log(`You searched for "${userSearched}"`)
 
-  // Passes query to  companySearch()
-  companySearch(query)
-  // Passes query to  stockSearch()
-  stockSearch(query)
+  // // Passes query to  companySearch()
+  // companySearch(query)
+  // // Passes query to  stockSearch()
+  // stockSearch(query)
+
+  nameToSymbol(userSearched)
 }
 
+// ------------------------------------------------USER SEARCH & SEARCH OPTIONS----------------------------------------------------------------------------
+async function nameToSymbol(userSearched) {
+  symbolInfo = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${userSearched}&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
+  // console.log(symbolInfo.bestMatches)
+  // console.log(symbolInfo.bestMatches[0])
+  console.log(symbolInfo.bestMatches[0]["1. symbol"])
+
+
+  for (var i = 0; i < 3; i++) {
+
+    query = symbolInfo.bestMatches[i]["1. symbol"]
+    tempName = symbolInfo.bestMatches[i]["2. name"]
+    createSearchOptions(query)
+    console.log('Hi')
+  }
+
+
+  // companySearch(query)
+  // stockSearch(query)
+}
+
+function createSearchOptions(query) {
+  document.querySelector('#btnGroup').innerHTML +=
+    // Creates button for current query
+    `
+    <button  onclick="runFromOption('${query}')" type="button" class="btn btn-secondary mx-1"><strong>Symbol:</strong> ${query} <strong>Company Name:</strong> ${tempName}</button>
+    `
+}
+// Presents information depending on which search optin use selects
+function runFromOption(query) {
+  companySearch(query)
+  stockSearch(query)
+}
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
+//-----------------------------------------------FINDING & DISPLAYING COMPANY INFO--------------------------------------------------------------------------
 // Uses the query to find the searched companies' information
 async function companySearch(query) {
   // API query is saved to a variable
@@ -113,9 +154,10 @@ function changeCompInfo() {
   // Dispalys the 52 Week Low
   document.querySelector('#yearLow').innerHTML = `52 Week Low: <strong>${yearLow}</strong>`
 
-  if(`${qEarningsGrowthYOY}`< 0 ) {document.querySelector("#cardQEarnings").style.color = "red"}
-  if(`${qRevenueGrowthYOY}`< 0 ) {document.querySelector("#cardQRevenue").style.color = "red"}
+  if (`${qEarningsGrowthYOY}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
+  if (`${qRevenueGrowthYOY}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
 }
+//------------------------------------------------------------------------------------------------------------------------------------------
 
 function getYesterday() {
   var day = new Date()
@@ -127,18 +169,19 @@ function getYesterday() {
 
 // get news API
 async function getNews() {
-  news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json()) 
+  news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
   console.log(news)
-  for (i = 0; i < 3; i++){
-  
-  title = news.results[i].title
-  console.log(title)
-  url = news.results[i].url
-  hotTitle = title.link(`${url}`)
-  console.log(url)
-  changeNewsInfo()
+  for (i = 0; i < 3; i++) {
 
-}}
+    title = news.results[i].title
+    console.log(title)
+    url = news.results[i].url
+    hotTitle = title.link(`${url}`)
+    console.log(url)
+    changeNewsInfo()
+
+  }
+}
 
 // Displays news info in a card on screen
 function changeNewsInfo() {
@@ -148,22 +191,22 @@ function changeNewsInfo() {
 
 
 // Scan local storage
-function checkLS(compName){
+function checkLS(compName) {
   // check to see if company is already on watch list     
   console.log(`${compName}`)
   // if result is less than 0 not on the list
   newWLItemcheck = LSWL.indexOf(`${compName}`)
   console.log(newWLItemcheck)
   // change wachlist button color and text
-  if (newWLItemcheck >= 0){
-    console.log(newWLItemcheck<1)
+  if (newWLItemcheck >= 0) {
+    console.log(newWLItemcheck < 1)
     console.log(newWLItemcheck)
-    console.log(typeof(newWLItemcheck))
-    
+    console.log(typeof (newWLItemcheck))
+
     document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger")
     document.querySelector('.wlbtn').innerHTML = "- from Watchlist"
   } else {
-    document.querySelector('.wlbtn').classList.replace("btn-danger","btn-success")
+    document.querySelector('.wlbtn').classList.replace("btn-danger", "btn-success")
     document.querySelector('.wlbtn').innerHTML = "+ to Watchlist"
   }
 }
@@ -171,31 +214,32 @@ function checkLS(compName){
 
 
 // Watchlist button trigger (add or remove from list)
-function watchListBtn(event){
+function watchListBtn(event) {
   console.log("Watch List button pressed")
   var wlbtnresults = document.querySelector('.wlbtn').innerText
-  if(wlbtnresults === "+ to Watchlist"){
+  if (wlbtnresults === "+ to Watchlist") {
     console.log("good to go")
     addLocalStorage()
   } else {
     console.log("no go")
     removeLocalStorage()
-  }  
+  }
 }
 
 // save items to local storage
-function addLocalStorage(){
+function addLocalStorage() {
   console.log("add Local Storage function started")
   // pull Local Storage if exists
-  if(localStorage.getItem("LSWL")=== null){
+  if (localStorage.getItem("LSWL") === null) {
     LSWL = [];
   } else {
     LSWL = JSON.parse(localStorage.getItem('LSWL'));
   }
   // if section is not blank proceed else stop
-  if (compName != null ) {
+  if (compName != null) {
     LSWL.push(compName);
-  } else {alert("Search for a company using the search bar")
+  } else {
+    alert("Search for a company using the search bar")
   }
   // Push updated array with new item back to Local Storage
   localStorage.setItem('LSWL', JSON.stringify(LSWL));
@@ -203,12 +247,12 @@ function addLocalStorage(){
 }
 
 // remove from local storage
-function removeLocalStorage(){
- 
+function removeLocalStorage() {
+
   console.log("remove Local Storage function started")
   console.log(newWLItemcheck)
   LSWL = JSON.parse(localStorage.getItem('LSWL'));
-  LSWLnew = LSWL.splice(newWLItemcheck,1)
+  LSWLnew = LSWL.splice(newWLItemcheck, 1)
   localStorage.setItem('LSWL', JSON.stringify(LSWL));
   console.log(LSWL)
   watchlist()
@@ -216,21 +260,21 @@ function removeLocalStorage(){
 
 
 // Add to  Watchlist
-function watchlist(){
+function watchlist() {
   document.querySelector('.list-group').innerHTML = ""
   var LSWLLength = LSWL.length
-  for (i=0; i < LSWLLength; i++){
+  for (i = 0; i < LSWLLength; i++) {
     document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${LSWL[i]}</button></li>`
   }
 }
 
 //when the watchlist button is pushed, pass the company name via the search function trigger
-  function wlBtnSearch(event){
-    console.log("WL button click")
-    var wlbSearch = document.querySelector(".wlBtn").innerText
-    console.log(wlbSearch)
-    stockSearch(wlbSearch)
-  }
+function wlBtnSearch(event) {
+  console.log("WL button click")
+  var wlbSearch = document.querySelector(".wlBtn").innerText
+  console.log(wlbSearch)
+  stockSearch(wlbSearch)
+}
 
 //Infor for Local Storage and Watch List
 
