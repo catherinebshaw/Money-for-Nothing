@@ -51,12 +51,18 @@ body {
 
 #news0 {
     height: 160px;
+    padding: 10px;
+    margin: 5px;
 }
 #news1 {
     height: 160px;
+    padding: 10px;
+    margin: 5px;
 }
 #news2 {
     height: 160px;
+    padding: 10px;
+    margin: 5px;
 }
 
 a {
@@ -71,9 +77,18 @@ a:hover {
 
 li {
     list-style-type: none;
+    background: lightgray;
+    border: 1px solid gray;
+
 }
 li button {
     width: 100%;
+}
+.card-header {
+    font-weight: bold;
+    text-align: center;
+    font-size: larger;
+
 }
 
 
