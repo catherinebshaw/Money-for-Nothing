@@ -40,7 +40,7 @@ h3 {
 
 }
 #news {
-    height: 300px;
+    height: auto;
     border: 2px solid gray;
     background:white;
     padding:20px;
@@ -48,6 +48,25 @@ h3 {
     margin-right: 0;
     width: 100%;
 
+}
+
+#news0 {
+    height: 160px;
+}
+#news1 {
+    height: 160px;
+}
+#news2 {
+    height: 160px;
+}
+
+a {
+    color: white;
+
+}
+
+a:hover {
+    color:black;
 }
 
 
