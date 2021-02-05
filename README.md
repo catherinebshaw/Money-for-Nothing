@@ -22,12 +22,12 @@ With this solid foundation as a starting point, we would consider adding the fol
 * More precise searches and better use of API's.
 
 ## Screen shot of our site as well as a zoom image of the team: 
-[!Grand](https://github.com/catherinebshaw/Money-for-Nothing/blob/main/Assets/snipssss%20(1).PNG)
+![Grand](https://github.com/catherinebshaw/Money-for-Nothing/blob/main/Assets/snipssss%20(1).PNG)
 
 
 
 
 ## Link:
-[](https://catherinebshaw.github.io/Money-for-Nothing/)
+[MFN](https://catherinebshaw.github.io/Money-for-Nothing/)
 
 
