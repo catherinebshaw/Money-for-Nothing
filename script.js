@@ -39,6 +39,7 @@ function LS(){
   } else {
     lswl = JSON.parse(localStorage.getItem('lswl'))
   }
+  watchlist()
 }
 console.log(lswl)
 
@@ -158,7 +159,7 @@ function changeNewsInfo() {
 
 
 LS()
-watchlist()
+
 getNews()
 getYesterday()
 
@@ -338,16 +339,20 @@ getYesterday()
 console.log(lswl)
 
 // Scan local storage
-function checkLS(compName){
+function checkLS(){
+  console.log(lswl)
   // check to see if company is already on watch list     
   console.log(`${compName}`)
   // if result is less than 0 not on the list
-  lsCompCheck = lswl.indexOf(`${compName}`)
+  lsCompCheck = lswl.find(lswl => lswl.name === `${compName}`)
+  lsCompCheck2 = lswl.findIndex(lswl => lswl.name === `${compName}`)
+
   console.log(lsCompCheck)
   // change wachlist button color and text
-  if (lsCompCheck >= 0){
+  if (lsCompCheck !== undefined){
     console.log(lsCompCheck<1)
     console.log(lsCompCheck)
+    console.log(lsCompCheck2)
     console.log(typeof(lsCompCheck))
     
     document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger")
@@ -401,10 +406,10 @@ function addLocalStorage(){
 function removeLocalStorage(){
 
   console.log("remove Local Storage function started")
-  console.log(newWLItemcheck)
+  console.log(compName)
   lswl = JSON.parse(localStorage.getItem('lswl'));
-  lswlnew = lswl.splice(newWLItemcheck,1)
-  localStorage.setItem('LSWL', JSON.stringify(lswl));
+  lswlnew = lswl.splice(lsCompCheck2,1)
+  localStorage.setItem('lswl', JSON.stringify(lswl));
   console.log(lswl)
   watchlist()
 }
@@ -412,15 +417,22 @@ function removeLocalStorage(){
     // Add to  Watchlist
 function watchlist(){
   document.querySelector('.list-group').innerHTML = ""
-  lswl = JSON.parse(localStorage.getItem('lswl'))
-  console.log(lswl)
+  if (localStorage.lswl === undefined){
+    lswl = []
+  } else {  
+    lswl = JSON.parse(localStorage.getItem('lswl'))
+    console.log(lswl)
   
-  var lswlLength = lswl.length
-  console.log(lswl)
-  console.log(lswlLength)
-  for (i=0; i < lswlLength; i++){
-    document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${lswl[i].name} - ${lswl[i].ticker}</button></li>`
+    var lswlLength = lswl.length
+    console.log(lswl)
+    console.log(lswlLength)
+
+    for (i=0; i < lswlLength; i++){
+      document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${lswl[i].name} - ${lswl[i].ticker}</button></li>`
+    }
+    
   }
+
 }
 
   //when the watchlist button is pushed, pass the company name via the search function trigger
