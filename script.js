@@ -29,20 +29,27 @@ var hotTitle
 
 
 //Infor for Local Storage and Watch List
-var LSWL
+var lswl
+var lsCompCheck
+var newCompany 
 var stockSymb
 
 
 
-function LS() {
-  if (LSWL === null) {
-    LSWL = []
+
+
+
+
+function LS(){
+  if (localStorage.getItem('lswl') === null ){
+    console.log(lswl===null)
+    lswl = []
+  } else {
+    lswl = JSON.parse(localStorage.getItem('lswl'))
   }
+  watchlist()
 }
-
-var LSWL = JSON.parse(localStorage.getItem('LSWL'))
-var newWLItemcheck
-
+console.log(lswl)
 
 // Saves the last thing searched in a variable
 function searchButton(event) {
@@ -114,14 +121,21 @@ async function companySearch(query) {
   yearHigh = parseFloat(compInfo["52WeekHigh"]).toFixed(2)
   yearLow = parseFloat(compInfo["52WeekLow"]).toFixed(2)
 
+  //bill added this
+  stockSymb = compInfo.Symbol
+
   // LOGS INFO TO THE CONSOLE
   console.log(`${query}'s info\nTheir sector is: [${sector}]\nTheir exchange is: [${exchange}]\nTheir Quarter Earnings is: [${qEarningsGrowthYOY}]\nTheir Quarterly Revenue Growth is: [${qRevenueGrowthYOY}]`)
   console.log('query')
+  
+  console.log(stockSymb)
+
+
 
   stockSymb = compInfo.Symbol
 
   // Check Local Storage for company
-  checkLS(compName)
+  checkLS(compName, query, stockSymb)
 }
 
 // Uses query to find they previous day's closing price
@@ -195,19 +209,49 @@ function changeNewsInfo() {
 }
 
 
+
+
+
+
+
+LS()
+
+getNews()
+getYesterday()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+console.log(lswl)
+
 // Scan local storage
-function checkLS(compName) {
+function checkLS(){
+  console.log(lswl)
   // check to see if company is already on watch list     
   console.log(`${compName}`)
   // if result is less than 0 not on the list
-  newWLItemcheck = LSWL.indexOf(`${compName}`)
-  console.log(newWLItemcheck)
-  // change wachlist button color and text
-  if (newWLItemcheck >= 0) {
-    console.log(newWLItemcheck < 1)
-    console.log(newWLItemcheck)
-    console.log(typeof (newWLItemcheck))
+  lsCompCheck = lswl.find(lswl => lswl.name === `${compName}`)
+  lsCompCheck2 = lswl.findIndex(lswl => lswl.name === `${compName}`)
 
+  console.log(lsCompCheck)
+  // change wachlist button color and text
+  if (lsCompCheck !== undefined){
+    console.log(lsCompCheck<1)
+    console.log(lsCompCheck)
+    console.log(lsCompCheck2)
+    console.log(typeof(lsCompCheck))
+    
     document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger")
     document.querySelector('.wlbtn').innerHTML = "- from Watchlist"
   } else {
@@ -216,10 +260,8 @@ function checkLS(compName) {
   }
 }
 
-
-
-// Watchlist button trigger (add or remove from list)
-function watchListBtn(event) {
+ // Watchlist button trigger (add or remove from list)
+ function watchListBtn(event){
   console.log("Watch List button pressed")
   var wlbtnresults = document.querySelector('.wlbtn').innerText
   if (wlbtnresults === "+ to Watchlist") {
@@ -231,63 +273,74 @@ function watchListBtn(event) {
   }
 }
 
+
 // save items to local storage
 function addLocalStorage() {
   console.log("add Local Storage function started")
   // pull Local Storage if exists
-  if (localStorage.getItem("LSWL") === null) {
-    LSWL = [];
+  if(localStorage.getItem("lswl")=== null){
+    lswl = [];
   } else {
-    LSWL = JSON.parse(localStorage.getItem('LSWL'));
+    lswl = JSON.parse(localStorage.getItem('lswl'));
   }
+
+  newCompany = {
+    name: compName,
+    ticker: `${stockSymb}`,
+  }
+
   // if section is not blank proceed else stop
-  if (compName != null) {
-    LSWL.push(compName);
-  } else {
-    alert("Search for a company using the search bar")
+  if (compName != null ) {
+    lswl.push(newCompany);
+  } else {alert("Search for a company using the search bar")
   }
   // Push updated array with new item back to Local Storage
-  localStorage.setItem('LSWL', JSON.stringify(LSWL));
+  localStorage.setItem('lswl', JSON.stringify(lswl));
   watchlist()
 }
 
 // remove from local storage
-function removeLocalStorage() {
+function removeLocalStorage(){
 
   console.log("remove Local Storage function started")
-  console.log(newWLItemcheck)
-  LSWL = JSON.parse(localStorage.getItem('LSWL'));
-  LSWLnew = LSWL.splice(newWLItemcheck, 1)
-  localStorage.setItem('LSWL', JSON.stringify(LSWL));
-  console.log(LSWL)
+  console.log(compName)
+  lswl = JSON.parse(localStorage.getItem('lswl'));
+  lswlnew = lswl.splice(lsCompCheck2,1)
+  localStorage.setItem('lswl', JSON.stringify(lswl));
+  console.log(lswl)
   watchlist()
 }
 
-
-// Add to  Watchlist
-function watchlist() {
+    // Add to  Watchlist
+function watchlist(){
   document.querySelector('.list-group').innerHTML = ""
-  var LSWLLength = LSWL.length
-  for (i = 0; i < LSWLLength; i++) {
-    document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${LSWL[i]}</button></li>`
+  if (localStorage.lswl === undefined){
+    lswl = []
+  } else {  
+    lswl = JSON.parse(localStorage.getItem('lswl'))
+    console.log(lswl)
+  
+    var lswlLength = lswl.length
+    console.log(lswl)
+    console.log(lswlLength)
+
+    for (i=0; i < lswlLength; i++){
+      var tick = lswl[i].ticker 
+      var nam = lswl[i].name
+
+      document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(${tick})"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button></li>`
+    }
   }
+
 }
 
-//when the watchlist button is pushed, pass the company name via the search function trigger
-function wlBtnSearch(event) {
-  console.log("WL button click")
-  var wlbSearch = document.querySelector(".wlBtn").innerText
-  console.log(wlbSearch)
-  stockSearch(wlbSearch)
-}
-
-//Infor for Local Storage and Watch List
+  //when the watchlist button is pushed, pass the company name via the search function trigger
+  function wlBtnSearch(tick){
+    console.log("WL button click")
+    console.log(tick)
+    stockSearch(tick)
+  }
 
 
 
-
-LS()
-watchlist()
-getNews()
-getYesterday()
 
