@@ -1,4 +1,5 @@
 
+
 .header {
     text-align: center;
     background-color: rgb(4, 58, 28);
@@ -28,12 +29,12 @@ footer {
 height: auto;
 border: 2px solid gray;
 background:white;
-padding: 10px;
+padding: 20px;
 width: 100%;
 margin-bottom: 10px;
 margin-top: 5px;
-
 }
+
 #companyName {
     text-align:center;
 }
@@ -93,4 +94,12 @@ li button {
 
 
 
+#porfolio {
+    height: 400px;
+}
+
+
+#newsMain{
+    margin: 0px 10px 0px 10px
+}
 
