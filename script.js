@@ -120,6 +120,7 @@ async function companySearch(query) {
   // LOGS INFO TO THE CONSOLE
   console.log(`${query}'s info\nTheir sector is: [${sector}]\nTheir exchange is: [${exchange}]\nTheir Quarter Earnings is: [${qEarningsGrowthYOY}]\nTheir Quarterly Revenue Growth is: [${qRevenueGrowthYOY}]`)
   console.log('query')
+  
 
   // Check Local Storage for company
   checkLS(compName, query)
@@ -273,7 +274,7 @@ function addLocalStorage() {
 
   newCompany = {
     name: compName,
-    ticker: query,
+    ticker: `${query}`,
   }
 
   // if section is not blank proceed else stop
