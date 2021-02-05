@@ -18,7 +18,7 @@ var qEarningsGrowthYOY
 var qRevenueGrowthYOY
 var qRevenue
 var compName
-var LSWL
+
 
 //NEWS API
 var news
@@ -29,6 +29,9 @@ var hotTitle
 
 
 //Infor for Local Storage and Watch List
+var LSWL
+var stockSymb
+
 
 
 function LS() {
@@ -114,6 +117,8 @@ async function companySearch(query) {
   // LOGS INFO TO THE CONSOLE
   console.log(`${query}'s info\nTheir sector is: [${sector}]\nTheir exchange is: [${exchange}]\nTheir Quarter Earnings is: [${qEarningsGrowthYOY}]\nTheir Quarterly Revenue Growth is: [${qRevenueGrowthYOY}]`)
   console.log('query')
+
+  stockSymb = compInfo.Symbol
 
   // Check Local Storage for company
   checkLS(compName)
