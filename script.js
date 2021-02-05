@@ -32,6 +32,10 @@ var hotTitle
 var lswl
 var lsCompCheck
 var newCompany 
+var stockSymb
+
+
+
 
 
 
@@ -117,13 +121,19 @@ async function companySearch(query) {
   yearHigh = parseFloat(compInfo["52WeekHigh"]).toFixed(2)
   yearLow = parseFloat(compInfo["52WeekLow"]).toFixed(2)
 
+  //bill added this
+  stockSymb = compInfo.Symbol
+
   // LOGS INFO TO THE CONSOLE
   console.log(`${query}'s info\nTheir sector is: [${sector}]\nTheir exchange is: [${exchange}]\nTheir Quarter Earnings is: [${qEarningsGrowthYOY}]\nTheir Quarterly Revenue Growth is: [${qRevenueGrowthYOY}]`)
   console.log('query')
   
+  console.log(stockSymb)
+
+
 
   // Check Local Storage for company
-  checkLS(compName, query)
+  checkLS(compName, query, stockSymb)
 }
 
 // Uses query to find they previous day's closing price
@@ -274,7 +284,7 @@ function addLocalStorage() {
 
   newCompany = {
     name: compName,
-    ticker: `${query}`,
+    ticker: `${stockSymb}`,
   }
 
   // if section is not blank proceed else stop
@@ -313,17 +323,22 @@ function watchlist(){
     console.log(lswlLength)
 
     for (i=0; i < lswlLength; i++){
-      document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(event)">${lswl[i].name} - ${lswl[i].ticker}</button></li>`
+      var tick = lswl[i].ticker 
+      var nam = lswl[i].name
+
+      document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(${tick})"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button></li>`
     }
-    
   }
 
 }
 
   //when the watchlist button is pushed, pass the company name via the search function trigger
-  function wlBtnSearch(event){
+  function wlBtnSearch(tick){
     console.log("WL button click")
-    var wlbSearch = document.querySelector(".wlBtn").innerText
-    console.log(wlbSearch)
-    stockSearch(wlbSearch)
+    console.log(tick)
+    stockSearch(tick)
   }
+
+
+
+
