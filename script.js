@@ -339,7 +339,7 @@ function watchlist() {
       var tick = lswl[i].ticker
       var nam = lswl[i].name
 
-      document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(${tick})"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button></li>`
+      document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch('${tick}')"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button></li>`
     }
   }
 
@@ -350,6 +350,7 @@ function wlBtnSearch(tick) {
   console.log("WL button click")
   console.log(tick)
   stockSearch(tick)
+  companySearch(tick)
 }
 
 

@@ -77,25 +77,19 @@ a:hover {
 
 li {
     list-style-type: none;
-<<<<<<< HEAD
     background: lightgray;
     border: 1px solid gray;
 
-=======
->>>>>>> adams_branch
 }
 li button {
     width: 100%;
 }
-<<<<<<< HEAD
 .card-header {
     font-weight: bold;
     text-align: center;
     font-size: larger;
 
 }
-=======
->>>>>>> adams_branch
 
 
 
