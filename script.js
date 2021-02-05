@@ -177,11 +177,11 @@ function changeCompInfo() {
   // Dispalys the Company Name if it has a valid value
   compName === undefined ? document.querySelector('#companyName').innerHTML = '' : document.querySelector('#companyName').innerHTML = `${compName}`
   // Dispalys the 52 Week High if it has a valid value
-  yearHigh === NaN ? document.querySelector('#yearHigh').innerHTML = '' : document.querySelector('#yearHigh').innerHTML = `52 Week High: <strong>${yearHigh}</strong>`
-  if (document.querySelector('#yearHigh').innerHTML = `52 Week High: NaN`) { document.querySelector('#yearHigh').innerHTML = '' }
+  document.querySelector('#yearHigh').innerHTML = `52 Week High: <strong>${yearHigh}</strong>`
+  if (document.querySelector('#yearHigh').innerText === "52 Week High: NaN") { document.querySelector('#yearHigh').innerHTML = '' }
   // Dispalys the 52 Week Low if it has a valid value
-  yearLow === NaN ? document.querySelector('#yearLow').innerHTML = '' : document.querySelector('#yearLow').innerHTML = `52 Week Low: <strong>${yearLow}</strong>`
-  if (document.querySelector('#yearLow').innerHTML = `52 Week Low: NaN`) { document.querySelector('#yearLow').innerHTML = '' }
+  document.querySelector('#yearLow').innerHTML = `52 Week Low: <strong>${yearLow}</strong>`
+  if (document.querySelector('#yearLow').innerText === "52 Week Low: NaN") { document.querySelector('#yearLow').innerHTML = '' }
 
   if (`${qEarningsGrowthYOY}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
   if (`${qRevenueGrowthYOY}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
