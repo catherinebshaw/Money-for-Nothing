@@ -93,6 +93,7 @@ function createSearchOptions(query) {
 function runFromOption(query) {
   companySearch(query)
   stockSearch(query)
+  document.querySelector('#btnGroup').innerHTML = ''
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 
