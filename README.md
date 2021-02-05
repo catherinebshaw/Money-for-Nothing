@@ -2,7 +2,7 @@
 
 This tool allows people with little to no experience to look up stocks and company information. Users can save a specific company to a watchlist and revisit the stock’s performance at a later time. Users can also keep abreast of the top headlines in business news. It is a particularly great tool for people new to business or the stock market.
 
-Our team focussed on a financial tool because we all had a common understanding of the topic, it seemed like a good way to integrate information and it could be useful to people with little understanding of finance or stocks. 
+Our team focussed on a financial tool because we all had a common understanding of the topic, it seemed like a good way to integrate information and it could be useful to people with little understanding of finance or stocks. Yes, we were inspired by the Dire Straits song and that is the origin of our project title.  
 
 ## User Experience
 Users will use the search bar to look up a company. If no company comes to mind, the news section provides daily headlines from the New York Times Business section. The original search will provide the stock symbol and company name of the top three matches. Users will chose from the options, click the appropriate button and be presented with the company and stock information of the company they chose. If users are interested in the company, they can add that stock to the watchlist and revisit the information at another time. If the user is no longer interested in a company on the watchlist, it can be removed.
