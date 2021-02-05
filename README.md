@@ -21,11 +21,13 @@ With this solid foundation as a starting point, we would consider adding the fol
 * A portfolio management function using 'pretend' funds
 * More precise searches and better use of API's.
 
-Screen shot of our site: 
-[!Grand]()
+## Screen shot of our site as well as a zoom image of the team: 
+[!Grand](https://github.com/catherinebshaw/Money-for-Nothing/blob/main/Assets/snipssss%20(1).PNG)
 
 
 
+
+## Link:
 []
 
 
