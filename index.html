@@ -9,7 +9,7 @@
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css" />
     <script src="https://kit.fontawesome.com/8eeec01ced.js" crossorigin="anonymous"></script>
-    
+
 
 
 </head>
@@ -39,10 +39,13 @@
                                 Watchlist
                             </div>
                             <ul class="list-group">
+
                             </ul>
                         </div>
                     </div>
                 </div>
+
+
                 <div class="col-sm-8">
                     <div class="container">
                         <div class="card">
@@ -52,14 +55,14 @@
                                 <div class="card-body" id="porfolio">
                                     <div class="row">
                                         <div class="col-6">
-                                            <p class="card-text" id="cardSector">Sector:</p>
-                                            <p class="card-text">Exchange: <span id="cardExchange"></span></p>
+                                            <p class="card-text" id="cardSector">Sector: </p>
+                                            <p class="card-text" id="cardExchange">Exchange: </p>
 
-                                            <h5>Year over Year</h5>
-                                            <p class="card-text">Quarter Earnings Growth: <span
-                                                    id="cardQEarnings"></span>
-                                            </p>
-                                            <p class="card-text">Quarter Rev Growth: <span id="cardQRevenue"></span></p>
+                                            <h5 id="YOY">Year over Year</h5>
+                                            <p class="card-text" id="allEarnings">Quarter Earnings Growth: <span
+                                                    id="cardQEarnings"></span></p>
+                                            <p class="card-text" id="allRevenue">Quarter Rev Growth: <span
+                                                    id="cardQRevenue"></span></p>
                                         </div>
                                         <div class="col-6">
                                             <p id="dateNow">As of: </p>
@@ -73,31 +76,33 @@
                                 </div>
                             </div>
                         </div>
-                    </div>  
-                    <div class="container">
-                        <div class="card">
-                            <h3 id="newsSection">News</h3>   
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-4"> 
-                                        <div class="card text-white bg-secondary" id="news0"> <a href="https://google.ca">
-                                            <p id="newsstory0"></p></a>
-                                            <div class="card-body">
+                        <div class="container">
+                            <div class="card">
+                                <h3 id="newsSection">News</h3>
+                                <hr>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="card text-white bg-secondary" id="news0"> <a
+                                                    href="https://google.ca">
+                                                    <p id="newsstory0"></p>
+                                                </a>
+                                                <div class="card-body">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="card text-white bg-secondary" id="news1">
-                                            <p id="newsstory1"> </p>
-                                            <div class="card-body">
+                                        <div class="col-md-4">
+                                            <div class="card text-white bg-secondary" id="news1">
+                                                <p id="newsstory1"> </p>
+                                                <div class="card-body">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="card text-white bg-secondary" id="news2" > 
-                                            <p id="newsstory2"></p>
-                                            <div class="card-body">
+                                        <div class="col-md-4">
+                                            <div class="card text-white bg-secondary" id="news2">
+                                                <p id="newsstory2"></p>
+                                                <div class="card-body">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +124,7 @@
     </footer>
 
     <script src="script.js"></script>
-    
+
 
 
 </body>

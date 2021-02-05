@@ -1,23 +1,27 @@
+// Variables for search functions
 var query
 var userSearched
 
+// Variables for API Objects
 var stockList
 var compInfo
 var symbolInfo
 var tempName
 
+// Variables for Stocks and Year High/Lows
 var closeingPrice
 var yearHigh
 var yearLow
 var isoDatefix
 
-// Info for Company Card
+// Variables for Company Card
 var sector
 var exchange
 var qEarningsGrowthYOY
 var qRevenueGrowthYOY
 var qRevenue
 var compName
+var LSWL
 
 
 //NEWS API
@@ -31,7 +35,7 @@ var hotTitle
 //Infor for Local Storage and Watch List
 var lswl
 var lsCompCheck
-var newCompany 
+var newCompany
 var stockSymb
 
 
@@ -40,9 +44,9 @@ var stockSymb
 
 
 
-function LS(){
-  if (localStorage.getItem('lswl') === null ){
-    console.log(lswl===null)
+function LS() {
+  if (localStorage.getItem('lswl') === null) {
+    console.log(lswl === null)
     lswl = []
   } else {
     lswl = JSON.parse(localStorage.getItem('lswl'))
@@ -54,6 +58,7 @@ console.log(lswl)
 // Saves the last thing searched in a variable
 function searchButton(event) {
   event.preventDefault()
+  document.querySelector('#btnGroup').innerHTML = ''
   userSearched = `${document.querySelector('#input').value}`
   // Query is stored in upper-case. Lower-case was affecting some results
   // query = tempQuery.toUpperCase()
@@ -99,6 +104,7 @@ function createSearchOptions(query) {
 function runFromOption(query) {
   companySearch(query)
   stockSearch(query)
+  document.querySelector('#btnGroup').innerHTML = ''
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -127,7 +133,7 @@ async function companySearch(query) {
   // LOGS INFO TO THE CONSOLE
   console.log(`${query}'s info\nTheir sector is: [${sector}]\nTheir exchange is: [${exchange}]\nTheir Quarter Earnings is: [${qEarningsGrowthYOY}]\nTheir Quarterly Revenue Growth is: [${qRevenueGrowthYOY}]`)
   console.log('query')
-  
+
   console.log(stockSymb)
 
 
@@ -154,24 +160,28 @@ async function stockSearch(query) {
 
 // Displays company info in a card on screen
 function changeCompInfo() {
-  // Dispalys Sector
-  document.querySelector('#cardSector').innerHTML = `Sector: <strong>${sector}</strong>`
-  // Dispalys Exchange
-  document.querySelector('#cardExchange').innerHTML = `<strong>${exchange}</strong>`
-  // Dispalys Quarterly Earnings
-  document.querySelector('#cardQEarnings').innerHTML = `<strong>${qEarningsGrowthYOY}</strong>`
-  // Dispalys Quarterly Revenue
-  document.querySelector('#cardQRevenue').innerHTML = `<strong>${qRevenueGrowthYOY}</strong>`
+  // Dispalys Sector if it has a valid value
+  sector === undefined ? document.querySelector('#cardSector').innerHTML = '' : document.querySelector('#cardSector').innerHTML = `Sector: <strong>${sector}</strong>`
+  // Dispalys Exchange if it has a valid value
+  exchange === undefined ? document.querySelector('#cardExchange').innerHTML = '' : document.querySelector('#cardExchange').innerHTML = `Exchange: <strong>${exchange}</strong>`
+  // Dispalys Quarterly Earnings if it has a valid value
+  qEarningsGrowthYOY === undefined ? document.querySelector('#allEarnings').innerHTML = '' : document.querySelector('#cardQEarnings').innerHTML = `<strong>${qEarningsGrowthYOY}</strong>`
+  // Dispalys Year Over Year heading if Quarterly Earnings has a valid value
+  qEarningsGrowthYOY === undefined ? document.querySelector('#YOY').innerHTML = '' : document.querySelector('#YOY').innerHTML = `Year over Year`
+  // Dispalys Quarterly Revenue if it has a valid value
+  qRevenueGrowthYOY === undefined ? document.querySelector('#allRevenue').innerHTML = '' : document.querySelector('#cardQRevenue').innerHTML = `<strong>${qRevenueGrowthYOY}</strong>`
+  // Dispalys the latest Closing Price if it has a valid value
+  isoDatefix === undefined ? document.querySelector('#dateNow').innerHTML = '' : document.querySelector('#dateNow').innerHTML = `As of: <strong>${isoDatefix}</strong>`
   // Dispalys the latest Closing Price
-  document.querySelector('#dateNow').innerHTML = `As of: <strong>${isoDatefix}</strong>`
-  // Dispalys the latest Closing Price
-  document.querySelector('#sharePrice').innerHTML = `Share Price: <strong>${closeingPrice}</strong>`
-  // Dispalys the Company Name
-  document.querySelector('#companyName').innerHTML = `${compName}`
-  // Dispalys the 52 Week High
-  document.querySelector('#yearHigh').innerHTML = `52 Week High: <strong>${yearHigh}</strong>`
-  // Dispalys the 52 Week Low
-  document.querySelector('#yearLow').innerHTML = `52 Week Low: <strong>${yearLow}</strong>`
+  closeingPrice === undefined ? document.querySelector('#sharePrice').innerHTML = '' : document.querySelector('#sharePrice').innerHTML = `Share Price: <strong>${closeingPrice}</strong>`
+  // Dispalys the Company Name if it has a valid value
+  compName === undefined ? document.querySelector('#companyName').innerHTML = '' : document.querySelector('#companyName').innerHTML = `${compName}`
+  // Dispalys the 52 Week High if it has a valid value
+  yearHigh === NaN ? document.querySelector('#yearHigh').innerHTML = '' : document.querySelector('#yearHigh').innerHTML = `52 Week High: <strong>${yearHigh}</strong>`
+  if (document.querySelector('#yearHigh').innerHTML = `52 Week High: NaN`) { document.querySelector('#yearHigh').innerHTML = '' }
+  // Dispalys the 52 Week Low if it has a valid value
+  yearLow === NaN ? document.querySelector('#yearLow').innerHTML = '' : document.querySelector('#yearLow').innerHTML = `52 Week Low: <strong>${yearLow}</strong>`
+  if (document.querySelector('#yearLow').innerHTML = `52 Week Low: NaN`) { document.querySelector('#yearLow').innerHTML = '' }
 
   if (`${qEarningsGrowthYOY}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
   if (`${qRevenueGrowthYOY}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
@@ -236,7 +246,7 @@ getYesterday()
 console.log(lswl)
 
 // Scan local storage
-function checkLS(){
+function checkLS() {
   console.log(lswl)
   // check to see if company is already on watch list     
   console.log(`${compName}`)
@@ -246,12 +256,12 @@ function checkLS(){
 
   console.log(lsCompCheck)
   // change wachlist button color and text
-  if (lsCompCheck !== undefined){
-    console.log(lsCompCheck<1)
+  if (lsCompCheck !== undefined) {
+    console.log(lsCompCheck < 1)
     console.log(lsCompCheck)
     console.log(lsCompCheck2)
-    console.log(typeof(lsCompCheck))
-    
+    console.log(typeof (lsCompCheck))
+
     document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger")
     document.querySelector('.wlbtn').innerHTML = "- from Watchlist"
   } else {
@@ -260,8 +270,8 @@ function checkLS(){
   }
 }
 
- // Watchlist button trigger (add or remove from list)
- function watchListBtn(event){
+// Watchlist button trigger (add or remove from list)
+function watchListBtn(event) {
   console.log("Watch List button pressed")
   var wlbtnresults = document.querySelector('.wlbtn').innerText
   if (wlbtnresults === "+ to Watchlist") {
@@ -278,7 +288,7 @@ function checkLS(){
 function addLocalStorage() {
   console.log("add Local Storage function started")
   // pull Local Storage if exists
-  if(localStorage.getItem("lswl")=== null){
+  if (localStorage.getItem("lswl") === null) {
     lswl = [];
   } else {
     lswl = JSON.parse(localStorage.getItem('lswl'));
@@ -290,9 +300,10 @@ function addLocalStorage() {
   }
 
   // if section is not blank proceed else stop
-  if (compName != null ) {
+  if (compName != null) {
     lswl.push(newCompany);
-  } else {alert("Search for a company using the search bar")
+  } else {
+    alert("Search for a company using the search bar")
   }
   // Push updated array with new item back to Local Storage
   localStorage.setItem('lswl', JSON.stringify(lswl));
@@ -300,32 +311,32 @@ function addLocalStorage() {
 }
 
 // remove from local storage
-function removeLocalStorage(){
+function removeLocalStorage() {
 
   console.log("remove Local Storage function started")
   console.log(compName)
   lswl = JSON.parse(localStorage.getItem('lswl'));
-  lswlnew = lswl.splice(lsCompCheck2,1)
+  lswlnew = lswl.splice(lsCompCheck2, 1)
   localStorage.setItem('lswl', JSON.stringify(lswl));
   console.log(lswl)
   watchlist()
 }
 
-    // Add to  Watchlist
-function watchlist(){
+// Add to  Watchlist
+function watchlist() {
   document.querySelector('.list-group').innerHTML = ""
-  if (localStorage.lswl === undefined){
+  if (localStorage.lswl === undefined) {
     lswl = []
-  } else {  
+  } else {
     lswl = JSON.parse(localStorage.getItem('lswl'))
     console.log(lswl)
-  
+
     var lswlLength = lswl.length
     console.log(lswl)
     console.log(lswlLength)
 
-    for (i=0; i < lswlLength; i++){
-      var tick = lswl[i].ticker 
+    for (i = 0; i < lswlLength; i++) {
+      var tick = lswl[i].ticker
       var nam = lswl[i].name
 
       document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch(${tick})"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button></li>`
@@ -334,12 +345,12 @@ function watchlist(){
 
 }
 
-  //when the watchlist button is pushed, pass the company name via the search function trigger
-  function wlBtnSearch(tick){
-    console.log("WL button click")
-    console.log(tick)
-    stockSearch(tick)
-  }
+//when the watchlist button is pushed, pass the company name via the search function trigger
+function wlBtnSearch(tick) {
+  console.log("WL button click")
+  console.log(tick)
+  stockSearch(tick)
+}
 
 
 
