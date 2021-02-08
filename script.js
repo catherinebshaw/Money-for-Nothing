@@ -136,8 +136,6 @@ async function companySearch(query) {
 
   console.log(stockSymb)
 
-
-
   stockSymb = compInfo.Symbol
 
   // Check Local Storage for company
@@ -147,11 +145,12 @@ async function companySearch(query) {
 // Uses query to find they previous day's closing price
 async function stockSearch(query) {
   // API query is saved to a variable
-  stockList = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${query}&outputsize=size&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
+  stockList = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
 
   console.log(stockList)
   // Closing price is parsed to a float and saved to a variable
-  closeingPrice = parseFloat(stockList["Time Series (Daily)"][`${isoDatefix}`]["4. close"])
+  closeingPrice = parseFloat(stockList["Global Quote"]["08. previous close"])
+  isoDatefix = stockList["Global Quote"]["07. latest trading day"]
 
   console.log(closeingPrice)
 
@@ -188,14 +187,6 @@ function changeCompInfo() {
 }
 //------------------------------------------------------------------------------------------------------------------------------------------
 
-function getYesterday() {
-  var day = new Date()
-  var yesteday = day.setDate(day.getDate() - 1)
-  var isoDate = day.toISOString()
-  isoDatefix = isoDate.slice(0, 10)
-  console.log(`The previous day is: ${isoDatefix}`);
-}
-
 // get news API
 async function getNews() {
   news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
@@ -225,9 +216,8 @@ function changeNewsInfo() {
 
 
 LS()
-
 getNews()
-getYesterday()
+
 
 
 
