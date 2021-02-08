@@ -26,13 +26,10 @@
             <button onclick="searchButton(event)" class="btn btn-secondary" type="button">Search</button>
         </div>
 
-        <div id="btnGroup" class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-            <label class="btn btn-outline-secondary" for="btnradio1">Company Name, Symbol</label> -->
-        </div>
-        
+        <div id="btnGroup" class="btn-group" role="group" aria-label="Basic radio toggle button group"></div>
+
         <div class="row align-items-start">
-            
+
             <div class="col-sm-4">
                 <div class="container">
                     <div class="card" id="watchlist">
@@ -49,67 +46,65 @@
 
             <div class="col-sm-8">
                 <div class="container"></div>
-                    <div class="card" id="porfolio">
-                        <div class="row">
-                            <h3 id="companyName">Company Name</h3>
-                            <hr>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <p class="card-text" id="cardSector">Sector: </p>
-                                        <p class="card-text" id="cardExchange">Exchange: </p>
-
-                                        <h5 id="YOY">Year over Year</h5>
-                                        <p class="card-text" id="allEarnings">Quarter Earnings Growth: <span
-                                                id="cardQEarnings"></span></p>
-                                        <p class="card-text" id="allRevenue">Quarter Rev Growth: <span
-                                                id="cardQRevenue"></span></p>
-                                    </div>
-                                    <div class="col-6">
-                                        <p id="dateNow">As of: </p>
-                                        <p id="sharePrice">Share Price (USD):</p>
-                                        <p id="yearHigh">52 Week High: </p>
-                                        <p id="yearLow">52 Week Low: </p>
-                                        <button onclick="watchListBtn(event)" type="button"
-                                            class="wlbtn btn btn-success float-end">+ to Watchlist</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-        <div class="row align-items-start">
-            <div class="col-sm">
-                <div class="container">
-                    <div class="card" id="newsMain">
-                        <h3 id="newsSection">News</h3>
+                <div class="card" id="porfolio">
+                    <div class="row">
+                        <h3 id="companyName">Company Name</h3>
                         <hr>
-                        <div class="container">
+                        <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card text-white bg-secondary" id="news0"> <a
-                                            href="https://google.ca">
-                                            <p id="newsstory0"></p>
-                                        </a>
-                                        <div class="card-body">
-                                        </div>
+                                <div class="col-6">
+                                    <p class="card-text" id="cardSector">Sector: </p>
+                                    <p class="card-text" id="cardExchange">Exchange: </p>
+
+                                    <h5 id="YOY">Year over Year</h5>
+                                    <p class="card-text" id="allEarnings">Quarter Earnings Growth: <span
+                                            id="cardQEarnings"></span></p>
+                                    <p class="card-text" id="allRevenue">Quarter Rev Growth: <span
+                                            id="cardQRevenue"></span></p>
+                                </div>
+                                <div class="col-6">
+                                    <p id="dateNow">As of: </p>
+                                    <p id="sharePrice">Share Price (USD):</p>
+                                    <p id="yearHigh">52 Week High: </p>
+                                    <p id="yearLow">52 Week Low: </p>
+                                    <button onclick="watchListBtn(event)" type="button"
+                                        class="wlbtn btn btn-success float-end">+ to Watchlist</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row align-items-start">
+        <div class="col-sm">
+            <div class="container">
+                <div class="card" id="newsMain">
+                    <h3 id="newsSection">News</h3>
+                    <hr>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card text-white bg-secondary" id="news0"> <a href="https://google.ca">
+                                        <p id="newsstory0"></p>
+                                    </a>
+                                    <div class="card-body">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="card text-white bg-secondary" id="news1">
-                                        <p id="newsstory1"> </p>
-                                        <div class="card-body">
-                                        </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-white bg-secondary" id="news1">
+                                    <p id="newsstory1"> </p>
+                                    <div class="card-body">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="card text-white bg-secondary" id="news2">
-                                        <p id="newsstory2"></p>
-                                        <div class="card-body">
-                                        </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-white bg-secondary" id="news2">
+                                    <p id="newsstory2"></p>
+                                    <div class="card-body">
                                     </div>
                                 </div>
                             </div>
@@ -118,10 +113,11 @@
                 </div>
             </div>
         </div>
-            
-              
-           
-       
+    </div>
+
+
+
+
     </div>
     <!--footer-->
     <footer class="fixed-bottom mt-auto bg-light text-center">

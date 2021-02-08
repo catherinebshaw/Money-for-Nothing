@@ -63,22 +63,13 @@ function searchButton(event) {
   // Query is stored in upper-case. Lower-case was affecting some results
   // query = tempQuery.toUpperCase()
   console.log(`You searched for "${userSearched}"`)
-
-  // // Passes query to  companySearch()
-  // companySearch(query)
-  // // Passes query to  stockSearch()
-  // stockSearch(query)
-
   nameToSymbol(userSearched)
 }
 
 // ------------------------------------------------USER SEARCH & SEARCH OPTIONS----------------------------------------------------------------------------
 async function nameToSymbol(userSearched) {
   symbolInfo = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${userSearched}&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
-  // console.log(symbolInfo.bestMatches)
-  // console.log(symbolInfo.bestMatches[0])
   console.log(symbolInfo.bestMatches[0]["1. symbol"])
-
 
   for (var i = 0; i < 3; i++) {
 
@@ -87,10 +78,6 @@ async function nameToSymbol(userSearched) {
     createSearchOptions(query)
     console.log('Hi')
   }
-
-
-  // companySearch(query)
-  // stockSearch(query)
 }
 
 function createSearchOptions(query) {
@@ -145,7 +132,7 @@ async function companySearch(query) {
 // Uses query to find they previous day's closing price
 async function stockSearch(query) {
   // API query is saved to a variable
-  stockList = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
+  stockList = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${query}&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
 
   console.log(stockList)
   // Closing price is parsed to a float and saved to a variable
@@ -172,15 +159,15 @@ function changeCompInfo() {
   // Dispalys the latest Closing Price if it has a valid value
   isoDatefix === undefined ? document.querySelector('#dateNow').innerHTML = '' : document.querySelector('#dateNow').innerHTML = `As of: <strong>${isoDatefix}</strong>`
   // Dispalys the latest Closing Price
-  closeingPrice === undefined ? document.querySelector('#sharePrice').innerHTML = '' : document.querySelector('#sharePrice').innerHTML = `Share Price: <strong>${closeingPrice}</strong>`
+  closeingPrice === undefined ? document.querySelector('#sharePrice').innerHTML = '' : document.querySelector('#sharePrice').innerHTML = `Share Price (USD): <strong>$${closeingPrice}</strong>`
   // Dispalys the Company Name if it has a valid value
   compName === undefined ? document.querySelector('#companyName').innerHTML = '' : document.querySelector('#companyName').innerHTML = `${compName}`
   // Dispalys the 52 Week High if it has a valid value
-  document.querySelector('#yearHigh').innerHTML = `52 Week High: <strong>${yearHigh}</strong>`
-  if (document.querySelector('#yearHigh').innerText === "52 Week High: NaN") { document.querySelector('#yearHigh').innerHTML = '' }
+  document.querySelector('#yearHigh').innerHTML = `52 Week High (USD): <strong>$${yearHigh}</strong>`
+  if (document.querySelector('#yearHigh').innerText === "52 Week High (USD): $undefined") { document.querySelector('#yearHigh').innerHTML = '' }
   // Dispalys the 52 Week Low if it has a valid value
-  document.querySelector('#yearLow').innerHTML = `52 Week Low: <strong>${yearLow}</strong>`
-  if (document.querySelector('#yearLow').innerText === "52 Week Low: NaN") { document.querySelector('#yearLow').innerHTML = '' }
+  document.querySelector('#yearLow').innerHTML = `52 Week Low (USD): <strong>$${yearLow}</strong>`
+  if (document.querySelector('#yearLow').innerText === "52 Week Low (USD): $undefined") { document.querySelector('#yearLow').innerHTML = '' }
 
   if (`${qEarningsGrowthYOY}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
   if (`${qRevenueGrowthYOY}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
@@ -208,29 +195,6 @@ function changeNewsInfo() {
   // Displays title of News
   document.querySelector(`#newsstory${i}`).innerHTML += `<strong>${hotTitle}</strong>`
 }
-
-
-
-
-
-
-
-LS()
-getNews()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 console.log(lswl)
@@ -342,6 +306,10 @@ function wlBtnSearch(tick) {
   stockSearch(tick)
   companySearch(tick)
 }
+
+
+LS()
+getNews()
 
 
 
