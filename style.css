@@ -27,7 +27,7 @@ footer {
 
 .card {
 height: auto;
-border: 2px solid gray;
+border: 1px solid gray;
 background:white;
 padding: 20px;
 width: 100%;
@@ -51,28 +51,32 @@ body {
     }
 
 #news0 {
-    height: 160px;
+    height: auto;
     padding: 10px;
     margin: 5px;
 }
+#newsstory0 {
+    color: grey;
+    text-align: center;
+}
+
 #news1 {
-    height: 160px;
+    height: auto;
     padding: 10px;
     margin: 5px;
 }
 #news2 {
-    height: 160px;
+    height: auto;
     padding: 10px;
     margin: 5px;
 }
 
 a {
-    color: white;
-
+    color:black;
 }
 
 a:hover {
-    color:black;
+    color:blue;
 }
 
 
@@ -91,7 +95,15 @@ li button {
     font-size: larger;
 
 }
+.img {
+    width: 100px;
+    height: 100px
+}
 
+h5 {
+    color: black;
+    text-align: center;
+}
 
 
 #porfolio {

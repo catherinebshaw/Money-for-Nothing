@@ -29,6 +29,8 @@ var news
 var abstract
 var url
 var title
+var image
+var caption
 var hotTitle
 
 
@@ -173,7 +175,7 @@ function changeCompInfo() {
   if (`${qRevenueGrowthYOY}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
 }
 //------------------------------------------------------------------------------------------------------------------------------------------
-
+//START NEWS API
 // get news API
 async function getNews() {
   news = await fetch('https://api.nytimes.com/svc/topstories/v2/business.json?api-key=IlIdSVUvpiF5PABbTeerA3kRncTqyqAo').then(r => r.json())
@@ -185,7 +187,11 @@ async function getNews() {
     url = news.results[i].url
     hotTitle = title.link(`${url}`)
     console.log(url)
+    image = news.results[i].multimedia[0].url
+    caption = news.results[i].multimedia[0].caption
     changeNewsInfo()
+    changeNewsImage()
+    changeNewsCaption()
 
   }
 }
@@ -193,8 +199,29 @@ async function getNews() {
 // Displays news info in a card on screen
 function changeNewsInfo() {
   // Displays title of News
-  document.querySelector(`#newsstory${i}`).innerHTML += `<strong>${hotTitle}</strong>`
+  document.querySelector(`#newsstory0`).innerHTML = news.results[0].title.link(news.results[0].url)
+  document.querySelector(`#newsstory1`).innerHTML = news.results[1].title.link(news.results[0].url)
+  document.querySelector(`#newsstory2`).innerHTML = news.results[2].title.link(news.results[0].url)
 }
+function changeNewsImage(){
+  //Displays image that accompanies article
+  document.querySelector(`#nwsImg0`).src = news.results[0].multimedia[0].url
+  document.querySelector(`#nwsImg1`).src = news.results[1].multimedia[0].url
+  document.querySelector(`#nwsImg2`).src = news.results[2].multimedia[0].url
+}
+
+  function changeNewsCaption(){
+  //Displays caption that accompanies article
+  document.querySelector(`#caption0`).innerHTML = news.results[0].multimedia[0].caption
+  document.querySelector(`#caption1`).innerHTML = news.results[1].multimedia[0].caption
+  document.querySelector(`#caption2`).innerHTML = news.results[2].multimedia[0].caption
+}
+//END NEWS API
+//----------------------------------------------------------------------------------------------------
+
+
+
+
 
 
 console.log(lswl)
