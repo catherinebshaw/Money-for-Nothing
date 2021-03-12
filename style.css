@@ -2,11 +2,15 @@
 
 .header {
     text-align: center;
-    background-color: rgb(4, 58, 28);
+    background-color: rgb(10, 10, 106);
     padding: 20px;
-    font-family: fantasy;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
 }
 
+.btn{
+    background-color: rgb(84, 10, 154);
+    border: rgb(85, 10, 155) solid;
+}
 #watchlist {
     padding: 20px;
     height: 400px;
@@ -44,10 +48,8 @@ h3 {
 }
 
 body {
-    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSQtxAPhoecrv8emMhad9plBYTapxg3DUTyQ&usqp=CAU);
-    background-repeat: repeat;
-    background-attachment: fixed;
-    background-size: auto;
+    background-image: url(Assets/background2.jpeg);
+    background-size:cover;
     }
 
 #news0 {

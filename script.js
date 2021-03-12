@@ -200,8 +200,8 @@ async function getNews() {
 function changeNewsInfo() {
   // Displays title of News
   document.querySelector(`#newsstory0`).innerHTML = news.results[0].title.link(news.results[0].url)
-  document.querySelector(`#newsstory1`).innerHTML = news.results[1].title.link(news.results[0].url)
-  document.querySelector(`#newsstory2`).innerHTML = news.results[2].title.link(news.results[0].url)
+  document.querySelector(`#newsstory1`).innerHTML = news.results[1].title.link(news.results[1].url)
+  document.querySelector(`#newsstory2`).innerHTML = news.results[2].title.link(news.results[2].url)
 }
 function changeNewsImage(){
   //Displays image that accompanies article
