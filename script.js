@@ -66,6 +66,7 @@ function searchButton(event) {
   // query = tempQuery.toUpperCase()
   console.log(`You searched for "${userSearched}"`)
   nameToSymbol(userSearched)
+  getAlpha(userSearched)
 }
 
 // ------------------------------------------------USER SEARCH & SEARCH OPTIONS----------------------------------------------------------------------------
@@ -339,5 +340,30 @@ LS()
 getNews()
 
 
+// Testing a new API 
 
+let autoSearch = []
+function testSearch(event){
+  autoSearch.push(event.key)
+  autoQuery=autoSearch.join("")
+  getAlpha(autoQuery)
+}
+
+
+
+async function getAlpha(autoQuery){
+
+  let stockCompanySearch = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${autoQuery}&apikey=RT7QRH1PKA05QUJ7`).then(r => r.json())
+  let stockCompanySearchResults = stockCompanySearch.bestMatches
+  document.querySelector('#datalistOptions').innerHTML = ""
+  stockCompanySearchResults.forEach(stock =>  {
+    document.querySelector('#datalistOptions').innerHTML +=
+    ` <option value=${stock["1. symbol"]}><span class="float-end">${stock["2. name"]}</span></option>`
+  })
+
+  // let alphaFetch = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${query}&apikey=RT7QRH1PKA05QUJ7`).then(r => r.json())
+  console.log(`this is alphaFetch`, stockCompanySearchResults)
+
+
+}
 
