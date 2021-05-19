@@ -342,27 +342,73 @@ getNews()
 
 // Testing a new API 
 
-let autoSearch = []
+
+
+
+
+
+
+let searchStockValue
 function testSearch(event){
-  autoSearch.push(event.key)
-  autoQuery=autoSearch.join("")
-  getAlpha(autoQuery)
+  console.log(event)
+  console.log(event.target)
+
+  searchStockValue = document.querySelector('#testinput').value
+  console.log(searchStockValue)
+
+  if(searchStockValue.length > 1){
+    getAlpha(searchStockValue)
+  }
+
+
 }
-
-
 
 async function getAlpha(autoQuery){
 
   let stockCompanySearch = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${autoQuery}&apikey=RT7QRH1PKA05QUJ7`).then(r => r.json())
   let stockCompanySearchResults = stockCompanySearch.bestMatches
+
+
+  console.log(stockCompanySearchResults)
+
+  
+  // console.log(stockCompanySearchResults.length)
+
   document.querySelector('#datalistOptions').innerHTML = ""
   stockCompanySearchResults.forEach(stock =>  {
     document.querySelector('#datalistOptions').innerHTML +=
-    ` <option value=${stock["1. symbol"]}><span class="float-end">${stock["2. name"]}</span></option>`
+    ` <option value=${stock["1. symbol"]} onKeyPress="alphaStockSearch('${stock["1. symbol"]}')" ><span class="float-end">${stock["2. name"]}</span></option>`
   })
 
-  // let alphaFetch = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${query}&apikey=RT7QRH1PKA05QUJ7`).then(r => r.json())
-  console.log(`this is alphaFetch`, stockCompanySearchResults)
+  
+
+ console.log(searchStockValue)
+// if(searchStockValue === stockCompanySearchResults[0]["1. symbol"]){
+//   console.log("yes")
+// } else ('nadda')
+
+
+//  if(stockCompanySearchResults.length === 1 && searchStockValue === stockCompanySearchResults[0]["1. symbol"]){
+//    console.log(`finally searching`)
+//   //  alphaStockSearch(searchStockValue)
+//  }
+
+}
+
+async function alphaStockSearch(symbol){
+  // searchStockValue = document.querySelector('#testinput').value = ""
+
+  console.log(`this is the passed symbol`, symbol)
+
+  
+  // let compOverview = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=RT7QRH1PKA05QUJ7`).then(r => r.json())
+  // let globalQuote = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=RT7QRH1PKA05QUJ7`).then(r => r.json())
+
+
+  // console.log(`this is alpha fetch`, compOverview)
+  // console.log(`this is alpha fetch`, globalQuote)
+
+
 
 
 }

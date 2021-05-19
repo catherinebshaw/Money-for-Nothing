@@ -115,7 +115,7 @@
     <!--Testing New Search API-->
 
         <div class=" testSearchDiv input-group ">
-            <input type="text" onKeyPress="testSearch(event)" list="datalistOptions" class="form-control" id="input" placeholder="Type to search for your stock..." aria-label="search" aria-describedby="search">
+            <input type="text" onKeyUp="testSearch(event)" list="datalistOptions" class="form-control" id="testinput" placeholder="Type to search for your stock..." aria-label="search" aria-describedby="search">
             <datalist id="datalistOptions">
                 <option value="Stock 1"><span class="float-end">Test</span></option>
                 <option value="Stock 2">
@@ -123,7 +123,7 @@
                 <option value="Stock 4">
                 <option value="Stock 5">
             </datalist>
-            <button onKeyPress="testSearch(event)" class="btn btn-secondary" type="button">Search</button>
+            <!-- <button onKeyPress="testSearch(event)" class="btn btn-secondary" type="button">Search</button> -->
         </div>  
     </div>
 
