@@ -28,15 +28,17 @@ footer {
     padding: 20px;
 }
 
+#topHalf {
+    margin-bottom: 5px;
+}
 
-.card {
-height: auto;
-border: 1px solid gray;
-background:white;
-padding: 20px;
-width: 100%;
-margin-bottom: 10px;
+.userCard {
+padding: 10px;
+margin-bottom: 100px;
 margin-top: 5px;
+box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+background: white;
+border-radius: 5px;
 }
 
 #companyName {
@@ -44,6 +46,7 @@ margin-top: 5px;
 }
 h3 {
     text-align:center;
+    padding: 15px
 
 }
 
@@ -52,33 +55,10 @@ body {
     background-size:cover;
     }
 
-#news0 {
-    height: auto;
-    padding: 10px;
-    margin: 5px;
-}
-#newsstory0 {
-    color: grey;
-    text-align: center;
-}
-
-#news1 {
-    height: auto;
-    padding: 10px;
-    margin: 5px;
-}
-#news2 {
-    height: auto;
-    padding: 10px;
-    margin: 5px;
-}
 
 a {
     color:black;
-}
-
-a:hover {
-    color:blue;
+    text-decoration: none;
 }
 
 
@@ -91,20 +71,10 @@ li {
 li button {
     width: 100%;
 }
-.card-header {
-    font-weight: bold;
-    text-align: center;
-    font-size: larger;
 
-}
-.img {
-    width: 100px;
-    height: 100px
-}
 
 h5 {
     color: black;
-    text-align: center;
 }
 
 
@@ -113,7 +83,17 @@ h5 {
 }
 
 
-#newsMain{
-    margin: 0px 10px 0px 10px
+.newsCardFormat{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: 0.5s;
+
 }
 
+.newsCardFormat:hover{
+    opacity: 0.75;
+    transform: scale(1.01);
+}
+
+[class *="newsCardFormat"]{
+    text-align: left;
+}

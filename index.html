@@ -9,6 +9,7 @@
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css" />
     <script src="https://kit.fontawesome.com/8eeec01ced.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
 
 
@@ -19,6 +20,7 @@
         <h1>Stock Tracker</h1>
     </div>
     <div class="container">
+
         <p id="searchResultsHere"></p>
         <div class="input-group my-3">
             <input type="text" class="form-control" id="input" placeholder="Enter Stock Symbol Here" aria-label="search"
@@ -28,25 +30,22 @@
 
         <div id="btnGroup" class="btn-group" role="group" aria-label="Basic radio toggle button group"></div>
 
-        <div class="row align-items-start">
+        <div class="row" id="topHalf">
 
             <div class="col-sm-4">
-                <div class="container">
-                    <div class="card" id="watchlist">
-                        <div class="card-header">
-                            Watchlist
-                        </div>
-                        <ul class="list-group">
-
-                        </ul>
+                <div class="userCard" id="watchlist">
+                    <div class="card-header">
+                        Watchlist
                     </div>
+                    <ul class="list-group">
+
+                    </ul>
                 </div>
             </div>
 
 
             <div class="col-sm-8">
-                <div class="container"></div>
-                <div class="card" id="porfolio">
+                <div class="userCard" id="porfolio">
                     <div class="row">
                         <h3 id="companyName">Company Name</h3>
                         <hr>
@@ -77,56 +76,49 @@
             </div>
         </div>
 
-    </div>
-    <div class="row align-items-start">
-        <div class="col-sm">
-            <div class="container">
-                <div class="card" id="newsMain">
-                    <h3 id="newsSection">New York Times Business News</h3>
-                    <hr>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card" >
-                                    <div class="card-body" id="news0">
-                                        <h5 class="card-title" id="newsstory0"></h5>
-                                        <img src="https://via.placeholder.com/150" id="nwsImg0"class="card-img-top" alt="story image">
-                                        <p class="card-text" id="caption0"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card" >
-                                    <div class="card-body" id="news1">
-                                        <h5 class="card-title" id="newsstory1"></h5>
-                                        <img src="https://via.placeholder.com/150" id="nwsImg1"class="card-img-top" alt="story image">
-                                        <p class="card-text" id="caption1"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card" >
-                                    <div class="card-body" id="news2">
-                                        <h5 class="card-title" id="newsstory2"></h5>
-                                        <img src="https://via.placeholder.com/150" id="nwsImg2"class="card-img-top" alt="story image">
-                                        <p class="card-text" id="caption2"></p>
-                                    </div>
-                                </div>
-                            </div>
+
+
+    
+        <div class="userCard" id="newsMain">
+            <h3 id="newsSection">New York Times Business News</h3>
+            <hr>
+            <div class="row row-cols-1 row-cols-md-3 g-1 pt-1">
+                <div class="col">
+                    <div class="card h-100 newsCardFormat " >
+                        <img src="https://via.placeholder.com/150" id="nwsImg0"class="card-img-top" alt="story image">
+                        <div class="card-body" id="news0">
+                            <h5 class="card-title pb-3" id="newsstory0">Card title</h5>
+                            <p class="card-text" id="caption0">This card has supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 newsCardFormat" >
+                        <img src="https://via.placeholder.com/150" id="nwsImg1"class="card-img-top" alt="story image">
+                        <div class="card-body" id="news1">
+                            <h5 class="card-title pb-3" id="newsstory1">Card title</h5>
+                            <p class="card-text" id="caption1">This card has supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 newsCardFormat" >
+                        <img src="https://via.placeholder.com/150" id="nwsImg2"class="card-img-top" alt="story image">
+                        <div class="card-body" id="news2">
+                            <h5 class="card-title pb-3" id="newsstory2">Card title</h5>
+                            <p class="card-text" id="caption2">This card has supporting text below as a natural lead-in to additional content.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+    
     <!--footer-->
-    <footer class="fixed-bottom mt-auto bg-light text-center">
-        <div class="container">
-            <span class="text-center">
-                Copyright 2021
-            </span>
-        </div>
+    <footer class="fixed-bottom mt-auto bg-light text-center ">
+        <span class="text-center">
+            Copyright 2021
+        </span>
     </footer>
 
     <script src="script.js"></script>
