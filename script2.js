@@ -223,28 +223,12 @@ function changeNewsImage(){
 console.log(lswl)
 
 // Scan local storage
-function checkLS() {
-  console.log(lswl)
-  // check to see if company is already on watch list     
-  console.log(`${compName}`)
-  // if result is less than 0 not on the list
-  lsCompCheck = lswl.find(lswl => lswl.name === `${compName}`)
-  lsCompCheck2 = lswl.findIndex(lswl => lswl.name === `${compName}`)
-
-  console.log(lsCompCheck)
-  // change wachlist button color and text
-  if (lsCompCheck !== undefined) {
-    console.log(lsCompCheck < 1)
-    console.log(lsCompCheck)
-    console.log(lsCompCheck2)
-    console.log(typeof (lsCompCheck))
-
-    document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger")
-    document.querySelector('.wlbtn').innerHTML = "- from Watchlist"
-  } else {
-    document.querySelector('.wlbtn').classList.replace("btn-danger", "btn-success")
-    document.querySelector('.wlbtn').innerHTML = "+ to Watchlist"
-  }
+function checkLS(ssymbol) {
+  
+  lswl.find(e => (e.ticker===`${ssymbol}`)) ? 
+  (console.log("already on list"), document.querySelector('.wlbtn').classList.replace("btn-success", "btn-danger"),
+  document.querySelector('.wlbtn').innerHTML = "- from Watchlist") :  (console.log("not yet on list"),document.querySelector('.wlbtn').classList.replace("btn-danger", "btn-success"),
+  document.querySelector('.wlbtn').innerHTML = "+ to Watchlist")
 }
 
 // Watchlist button trigger (add or remove from list)
@@ -264,12 +248,13 @@ function watchListBtn(event) {
 function addLocalStorage() {
   console.log("add Local Storage function started")
   newCompany = {
-    name: `${companyDetails[0]["Name"]}`,
-    ticker: `${companyDetails[0]["Symbol"]}`,
+    name: `${compDetails[0]["Name"]}`,
+    ticker: `${compDetails[0]["Symbol"]}`,
   }
 
-    lswl.find(e => (e.name===`${newCompany.name}`)) ? 
-      console.log("already on list") :  (console.log("not yet on list"), lswl.push(newCompany),localStorage.lswl=JSON.stringify(lswl))
+  lswl.push(newCompany)
+  localStorage.lswl=JSON.stringify(lswl)
+
   watchlist()
 }
 
@@ -288,33 +273,23 @@ function removeLocalStorage() {
 // Add to  Watchlist
 function watchlist() {
   document.querySelector('.list-group').innerHTML = ""
-  // if (localStorage.lswl === undefined) {
-  //   lswl = []
-  // } else {
-  //   lswl = JSON.parse(localStorage.getItem('lswl'))
-  //   console.log(lswl)
+  var lswlLength = lswl.length
+  console.log(lswl)
+  console.log(lswlLength)
 
-    var lswlLength = lswl.length
-    console.log(lswl)
-    console.log(lswlLength)
+  for (i = 0; i < lswlLength; i++) {
+    var tick = lswl[i].ticker
+    var nam = lswl[i].name
 
-    for (i = 0; i < lswlLength; i++) {
-      var tick = lswl[i].ticker
-      var nam = lswl[i].name
-
-      document.querySelector('.list-group').innerHTML += `<li class="wlBtn"> <button type="button" class="btn btn-outline-light" onClick="wlBtnSearch(${tick})"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button>    </li>`  
-      
-    }
-  // }
-
+    document.querySelector('.list-group').innerHTML += `<li class="wlBtn"> <button type="button" class="btn btn-outline-light" onClick="wlBtnSearch('${tick}')"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button>    </li>`  
+  }
+  checkLS(tick)
 }
 
 //when the watchlist button is pushed, pass the company name via the search function trigger
 function wlBtnSearch(tick) {
-  console.log("WL button click")
-  console.log(tick)
-  stockSearch(tick)
-  companySearch(tick)
+  alphaStockSearch(tick)
+  checkLS(tick)
 }
 
 
@@ -345,9 +320,11 @@ function testSearch(event){
     console.log(searchStockValue.length)
     console.log(Boolean(stockCompanySearchSymbols.find(e => (e!==`${searchStockValue}`))))
     alphaStockSearch(searchStockValue)
+    // checkLS(searchStockValue)
     
   }else {console.log(`keep searching`)
   getAlpha(searchStockValue)}
+  // checkLS(searchStockValue)
 }
 
 
@@ -385,59 +362,31 @@ async function alphaStockSearch(event){
   // will be the test code here
     corpQuote = globalQuote.filter(e=>e["01. symbol"]=== event)
     console.log(corpQuote)
-    console.log(corpQuote[0]["01. symbol"])
+    
+    compDetails = companyDetails.filter(e=>e["Symbol"]=== event)
+    console.log(compDetails)
+    
 
-    console.log(corpQuote[0]["02. open"])
-
-    console.log(corpQuote[0]["08. previous close"])
-    console.log(corpQuote[0]["07. latest trading day"])
-
-
-    compDetails = companyDetails.filter(e=>e["symbol"]=== event)
-    console.log(companyDetails)
-    console.log(companyDetails[0]["Symbol"])
-
-    console.log(companyDetails[0]["AssetType"])
-
-    console.log(companyDetails[0]["Name"])
-
-    console.log(companyDetails[0]["Description"])
-    console.log(companyDetails[0]["52WeekHigh"])
-    console.log(companyDetails[0]["52WeekLow"])
-    console.log(companyDetails[0]["Currency"])
-    console.log(companyDetails[0]["Exchange"])
-    console.log(companyDetails[0]["Sector"])
-    console.log(companyDetails[0]["QuarterlyRevenueGrowthYOY"])
-
-    console.log(companyDetails[0]["QuarterlyEarningsGrowthYOY"])
-
-
-
-
-    document.querySelector('#companyName').innerHTML = `<strong>${companyDetails[0]["Name"]}</strong>`
-    document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${companyDetails[0]["Sector"]}</strong>`
-    document.querySelector('#sharePrice').innerHTML = `Share Price (${companyDetails[0]["Currency"]}):  <strong>$ ${corpQuote[0]["08. previous close"]}</strong>`
-    document.querySelector('#yearHigh').innerHTML = `52 Week High:  <strong>$ ${companyDetails[0]["52WeekHigh"]}</strong>`
-    document.querySelector('#yearLow').innerHTML = `52 Week Low:  <strong>$ ${companyDetails[0]["52WeekLow"]}</strong>`
+    document.querySelector('#companyName').innerHTML = `<strong>${compDetails[0]["Name"]}</strong>`
+    document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${compDetails[0]["Sector"]}</strong>`
+    document.querySelector('#sharePrice').innerHTML = `Share Price (${compDetails[0]["Currency"]}):  <strong>$ ${corpQuote[0]["08. previous close"]}</strong>`
+    document.querySelector('#yearHigh').innerHTML = `52 Week High:  <strong>$ ${compDetails[0]["52WeekHigh"]}</strong>`
+    document.querySelector('#yearLow').innerHTML = `52 Week Low:  <strong>$ ${compDetails[0]["52WeekLow"]}</strong>`
   
-    document.querySelector('#cardExchange').innerHTML = `Exchange:  <strong>${companyDetails[0]["Exchange"]}</strong>`
+    document.querySelector('#cardExchange').innerHTML = `Exchange:  <strong>${compDetails[0]["Exchange"]}</strong>`
     document.querySelector('#dateNow').innerHTML = `As of:  <strong>${corpQuote[0]["07. latest trading day"]}</strong>`
    
-    document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth::  <span id="cardQRevenue" ><strong>${companyDetails[0]["QuarterlyRevenueGrowthYOY"]}</strong></span>`
-    document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth::  <span id="cardQEarnings" ><strong>${companyDetails[0]["QuarterlyEarningsGrowthYOY"]}</strong></span>`
-    // document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${companyDetails[0]["Sector"]}</strong>`
-    // document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${companyDetails[0]["Sector"]}</strong>`
+    document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth::  <span id="cardQRevenue" ><strong>${compDetails[0]["QuarterlyRevenueGrowthYOY"]}</strong></span>`
+    document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth::  <span id="cardQEarnings" ><strong>${compDetails[0]["QuarterlyEarningsGrowthYOY"]}</strong></span>`
 
-    
-   
 
-    if (`${companyDetails[0]["QuarterlyRevenueGrowthYOY"]}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
-    if (`${companyDetails[0]["QuarterlyEarningsGrowthYOY"]}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
+    if (`${compDetails[0]["QuarterlyRevenueGrowthYOY"]}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
+    if (`${compDetails[0]["QuarterlyEarningsGrowthYOY"]}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
 
 
 
 
-
+    checkLS(compDetails[0]["Symbol"])
 
 
 
@@ -474,7 +423,7 @@ globalQuote =[
     "10. change percent": "-0.5003%"
   },
   {
-    "01. symbol": "Fake Company 1",
+    "01. symbol": "FK1",
     "02. open": "142.3200",
     "03. high": "143.2000",
     "04. low": "140.9200",
@@ -486,7 +435,7 @@ globalQuote =[
     "10. change percent": "-0.5003%"
   },
   {
-    "01. symbol": "Fake Company 2",
+    "01. symbol": "FK2",
     "02. open": "142.3200",
     "03. high": "143.2000",
     "04. low": "140.9200",
@@ -503,68 +452,193 @@ globalQuote =[
 
 
 companyDetails = [
-{
-  "Symbol": "IBM",
-  "AssetType": "Common Stock",
-  "Name": "International Business Machines Corporation",
-  "Description": "International Business Machines Corporation provides integrated solutions and services worldwide. Its Cloud & Cognitive Software segment offers software for vertical and domain-specific solutions in health, financial services, supply chain, and asset management, weather, and security software and services application areas; and customer information control system and storage, and analytics and integration software solutions to support client mission critical on-premise workloads in banking, airline, and retail industries. It also offers middleware and data platform software, including Red Hat that enables the operation of clients' hybrid multi-cloud environments; and Cloud Paks, WebSphere distributed, and analytics platform software, such as DB2 distributed, information integration, and enterprise content management, as well as IoT, Blockchain and AI/Watson platforms. The company's Global Business Services segment offers business consulting services; system integration, application management, maintenance, and support services for packaged software; and finance, procurement, talent and engagement, and industry-specific business process outsourcing services. Its Global Technology Services segment provides IT infrastructure and platform services; and project, managed, outsourcing, and cloud-delivered services for enterprise IT infrastructure environments; and IT infrastructure support services. The company's Systems segment offers servers for businesses, cloud service providers, and scientific computing organizations; data storage products and solutions; and z/OS, an enterprise operating system, as well as Linux. Its Global Financing segment provides lease, installment payment, loan financing, short-term working capital financing, and remanufacturing and remarketing services. The company was formerly known as Computing-Tabulating-Recording Co. The company was incorporated in 1911 and is headquartered in Armonk, New York.",
-  "CIK": "51143",
-  "Exchange": "NYSE",
-  "Currency": "USD",
-  "Country": "USA",
-  "Sector": "Technology",
-  "Industry": "Information Technology Services",
-  "Address": "One New Orchard Road, Armonk, NY, United States, 10504",
-  "FullTimeEmployees": "345900",
-  "FiscalYearEnd": "December",
-  "LatestQuarter": "2021-03-31",
-  "MarketCapitalization": "127943565312",
-  "EBITDA": "15822000128",
-  "PERatio": "23.9528",
-  "PEGRatio": "1.5614",
-  "BookValue": "23.938",
-  "DividendPerShare": "6.52",
-  "DividendYield": "0.0453",
-  "EPS": "5.978",
-  "RevenuePerShareTTM": "82.734",
-  "ProfitMargin": "0.0728",
-  "OperatingMarginTTM": "0.1232",
-  "ReturnOnAssetsTTM": "0.0376",
-  "ReturnOnEquityTTM": "0.2536",
-  "RevenueTTM": "73779003392",
-  "GrossProfitTTM": "35575000000",
-  "DilutedEPSTTM": "5.978",
-  "QuarterlyEarningsGrowthYOY": "-0.192",
-  "QuarterlyRevenueGrowthYOY": "0.009",
-  "AnalystTargetPrice": "143.63",
-  "TrailingPE": "23.9528",
-  "ForwardPE": "13.2802",
-  "PriceToSalesRatioTTM": "1.7667",
-  "PriceToBookRatio": "6.062",
-  "EVToRevenue": "2.4349",
-  "EVToEBITDA": "13.2425",
-  "Beta": "1.2262",
-  "52WeekHigh": "148.38",
-  "52WeekLow": "101.8909",
-  "50DayMovingAverage": "139.9232",
-  "200DayMovingAverage": "127.6438",
-  "SharesOutstanding": "893523008",
-  "SharesFloat": "891896616",
-  "SharesShort": "28585173",
-  "SharesShortPriorMonth": "27009286",
-  "ShortRatio": "4.96",
-  "ShortPercentOutstanding": "0.03",
-  "ShortPercentFloat": "0.032",
-  "PercentInsiders": "0.134",
-  "PercentInstitutions": "57.742",
-  "ForwardAnnualDividendRate": "6.56",
-  "ForwardAnnualDividendYield": "0.0456",
-  "PayoutRatio": "0.7593",
-  "DividendDate": "2021-06-10",
-  "ExDividendDate": "2021-05-07",
-  "LastSplitFactor": "2:1",
-  "LastSplitDate": "1999-05-27"
-}]
+  {
+    "Symbol": "IBM",
+    "AssetType": "Common Stock",
+    "Name": "International Business Machines Corporation",
+    "Description": "International Business Machines Corporation provides integrated solutions and services worldwide. Its Cloud & Cognitive Software segment offers software for vertical and domain-specific solutions in health, financial services, supply chain, and asset management, weather, and security software and services application areas; and customer information control system and storage, and analytics and integration software solutions to support client mission critical on-premise workloads in banking, airline, and retail industries. It also offers middleware and data platform software, including Red Hat that enables the operation of clients' hybrid multi-cloud environments; and Cloud Paks, WebSphere distributed, and analytics platform software, such as DB2 distributed, information integration, and enterprise content management, as well as IoT, Blockchain and AI/Watson platforms. The company's Global Business Services segment offers business consulting services; system integration, application management, maintenance, and support services for packaged software; and finance, procurement, talent and engagement, and industry-specific business process outsourcing services. Its Global Technology Services segment provides IT infrastructure and platform services; and project, managed, outsourcing, and cloud-delivered services for enterprise IT infrastructure environments; and IT infrastructure support services. The company's Systems segment offers servers for businesses, cloud service providers, and scientific computing organizations; data storage products and solutions; and z/OS, an enterprise operating system, as well as Linux. Its Global Financing segment provides lease, installment payment, loan financing, short-term working capital financing, and remanufacturing and remarketing services. The company was formerly known as Computing-Tabulating-Recording Co. The company was incorporated in 1911 and is headquartered in Armonk, New York.",
+    "CIK": "51143",
+    "Exchange": "NYSE",
+    "Currency": "USD",
+    "Country": "USA",
+    "Sector": "Technology",
+    "Industry": "Information Technology Services",
+    "Address": "One New Orchard Road, Armonk, NY, United States, 10504",
+    "FullTimeEmployees": "345900",
+    "FiscalYearEnd": "December",
+    "LatestQuarter": "2021-03-31",
+    "MarketCapitalization": "127943565312",
+    "EBITDA": "15822000128",
+    "PERatio": "23.9528",
+    "PEGRatio": "1.5614",
+    "BookValue": "23.938",
+    "DividendPerShare": "6.52",
+    "DividendYield": "0.0453",
+    "EPS": "5.978",
+    "RevenuePerShareTTM": "82.734",
+    "ProfitMargin": "0.0728",
+    "OperatingMarginTTM": "0.1232",
+    "ReturnOnAssetsTTM": "0.0376",
+    "ReturnOnEquityTTM": "0.2536",
+    "RevenueTTM": "73779003392",
+    "GrossProfitTTM": "35575000000",
+    "DilutedEPSTTM": "5.978",
+    "QuarterlyEarningsGrowthYOY": "-0.192",
+    "QuarterlyRevenueGrowthYOY": "0.009",
+    "AnalystTargetPrice": "143.63",
+    "TrailingPE": "23.9528",
+    "ForwardPE": "13.2802",
+    "PriceToSalesRatioTTM": "1.7667",
+    "PriceToBookRatio": "6.062",
+    "EVToRevenue": "2.4349",
+    "EVToEBITDA": "13.2425",
+    "Beta": "1.2262",
+    "52WeekHigh": "148.38",
+    "52WeekLow": "101.8909",
+    "50DayMovingAverage": "139.9232",
+    "200DayMovingAverage": "127.6438",
+    "SharesOutstanding": "893523008",
+    "SharesFloat": "891896616",
+    "SharesShort": "28585173",
+    "SharesShortPriorMonth": "27009286",
+    "ShortRatio": "4.96",
+    "ShortPercentOutstanding": "0.03",
+    "ShortPercentFloat": "0.032",
+    "PercentInsiders": "0.134",
+    "PercentInstitutions": "57.742",
+    "ForwardAnnualDividendRate": "6.56",
+    "ForwardAnnualDividendYield": "0.0456",
+    "PayoutRatio": "0.7593",
+    "DividendDate": "2021-06-10",
+    "ExDividendDate": "2021-05-07",
+    "LastSplitFactor": "2:1",
+    "LastSplitDate": "1999-05-27"
+  },
+  {
+    "Symbol": "FK1",
+    "AssetType": "Common Stock",
+    "Name": "Fake Company 1",
+    "Description": "International Business Machines Corporation provides integrated solutions and services worldwide. Its Cloud & Cognitive Software segment offers software for vertical and domain-specific solutions in health, financial services, supply chain, and asset management, weather, and security software and services application areas; and customer information control system and storage, and analytics and integration software solutions to support client mission critical on-premise workloads in banking, airline, and retail industries. It also offers middleware and data platform software, including Red Hat that enables the operation of clients' hybrid multi-cloud environments; and Cloud Paks, WebSphere distributed, and analytics platform software, such as DB2 distributed, information integration, and enterprise content management, as well as IoT, Blockchain and AI/Watson platforms. The company's Global Business Services segment offers business consulting services; system integration, application management, maintenance, and support services for packaged software; and finance, procurement, talent and engagement, and industry-specific business process outsourcing services. Its Global Technology Services segment provides IT infrastructure and platform services; and project, managed, outsourcing, and cloud-delivered services for enterprise IT infrastructure environments; and IT infrastructure support services. The company's Systems segment offers servers for businesses, cloud service providers, and scientific computing organizations; data storage products and solutions; and z/OS, an enterprise operating system, as well as Linux. Its Global Financing segment provides lease, installment payment, loan financing, short-term working capital financing, and remanufacturing and remarketing services. The company was formerly known as Computing-Tabulating-Recording Co. The company was incorporated in 1911 and is headquartered in Armonk, New York.",
+    "CIK": "51143",
+    "Exchange": "NYSE",
+    "Currency": "USD",
+    "Country": "USA",
+    "Sector": "Technology",
+    "Industry": "Information Technology Services",
+    "Address": "One New Orchard Road, Armonk, NY, United States, 10504",
+    "FullTimeEmployees": "345900",
+    "FiscalYearEnd": "December",
+    "LatestQuarter": "2021-03-31",
+    "MarketCapitalization": "127943565312",
+    "EBITDA": "15822000128",
+    "PERatio": "23.9528",
+    "PEGRatio": "1.5614",
+    "BookValue": "23.938",
+    "DividendPerShare": "6.52",
+    "DividendYield": "0.0453",
+    "EPS": "5.978",
+    "RevenuePerShareTTM": "82.734",
+    "ProfitMargin": "0.0728",
+    "OperatingMarginTTM": "0.1232",
+    "ReturnOnAssetsTTM": "0.0376",
+    "ReturnOnEquityTTM": "0.2536",
+    "RevenueTTM": "73779003392",
+    "GrossProfitTTM": "35575000000",
+    "DilutedEPSTTM": "5.978",
+    "QuarterlyEarningsGrowthYOY": "-0.192",
+    "QuarterlyRevenueGrowthYOY": "0.009",
+    "AnalystTargetPrice": "143.63",
+    "TrailingPE": "23.9528",
+    "ForwardPE": "13.2802",
+    "PriceToSalesRatioTTM": "1.7667",
+    "PriceToBookRatio": "6.062",
+    "EVToRevenue": "2.4349",
+    "EVToEBITDA": "13.2425",
+    "Beta": "1.2262",
+    "52WeekHigh": "148.38",
+    "52WeekLow": "101.8909",
+    "50DayMovingAverage": "139.9232",
+    "200DayMovingAverage": "127.6438",
+    "SharesOutstanding": "893523008",
+    "SharesFloat": "891896616",
+    "SharesShort": "28585173",
+    "SharesShortPriorMonth": "27009286",
+    "ShortRatio": "4.96",
+    "ShortPercentOutstanding": "0.03",
+    "ShortPercentFloat": "0.032",
+    "PercentInsiders": "0.134",
+    "PercentInstitutions": "57.742",
+    "ForwardAnnualDividendRate": "6.56",
+    "ForwardAnnualDividendYield": "0.0456",
+    "PayoutRatio": "0.7593",
+    "DividendDate": "2021-06-10",
+    "ExDividendDate": "2021-05-07",
+    "LastSplitFactor": "2:1",
+    "LastSplitDate": "1999-05-27"
+  },
+  {
+    "Symbol": "FK2",
+    "AssetType": "Common Stock",
+    "Name": "Fake Company 2",
+    "Description": "International Business Machines Corporation provides integrated solutions and services worldwide. Its Cloud & Cognitive Software segment offers software for vertical and domain-specific solutions in health, financial services, supply chain, and asset management, weather, and security software and services application areas; and customer information control system and storage, and analytics and integration software solutions to support client mission critical on-premise workloads in banking, airline, and retail industries. It also offers middleware and data platform software, including Red Hat that enables the operation of clients' hybrid multi-cloud environments; and Cloud Paks, WebSphere distributed, and analytics platform software, such as DB2 distributed, information integration, and enterprise content management, as well as IoT, Blockchain and AI/Watson platforms. The company's Global Business Services segment offers business consulting services; system integration, application management, maintenance, and support services for packaged software; and finance, procurement, talent and engagement, and industry-specific business process outsourcing services. Its Global Technology Services segment provides IT infrastructure and platform services; and project, managed, outsourcing, and cloud-delivered services for enterprise IT infrastructure environments; and IT infrastructure support services. The company's Systems segment offers servers for businesses, cloud service providers, and scientific computing organizations; data storage products and solutions; and z/OS, an enterprise operating system, as well as Linux. Its Global Financing segment provides lease, installment payment, loan financing, short-term working capital financing, and remanufacturing and remarketing services. The company was formerly known as Computing-Tabulating-Recording Co. The company was incorporated in 1911 and is headquartered in Armonk, New York.",
+    "CIK": "51143",
+    "Exchange": "NYSE",
+    "Currency": "USD",
+    "Country": "USA",
+    "Sector": "Technology",
+    "Industry": "Information Technology Services",
+    "Address": "One New Orchard Road, Armonk, NY, United States, 10504",
+    "FullTimeEmployees": "345900",
+    "FiscalYearEnd": "December",
+    "LatestQuarter": "2021-03-31",
+    "MarketCapitalization": "127943565312",
+    "EBITDA": "15822000128",
+    "PERatio": "23.9528",
+    "PEGRatio": "1.5614",
+    "BookValue": "23.938",
+    "DividendPerShare": "6.52",
+    "DividendYield": "0.0453",
+    "EPS": "5.978",
+    "RevenuePerShareTTM": "82.734",
+    "ProfitMargin": "0.0728",
+    "OperatingMarginTTM": "0.1232",
+    "ReturnOnAssetsTTM": "0.0376",
+    "ReturnOnEquityTTM": "0.2536",
+    "RevenueTTM": "73779003392",
+    "GrossProfitTTM": "35575000000",
+    "DilutedEPSTTM": "5.978",
+    "QuarterlyEarningsGrowthYOY": "-0.192",
+    "QuarterlyRevenueGrowthYOY": "0.009",
+    "AnalystTargetPrice": "143.63",
+    "TrailingPE": "23.9528",
+    "ForwardPE": "13.2802",
+    "PriceToSalesRatioTTM": "1.7667",
+    "PriceToBookRatio": "6.062",
+    "EVToRevenue": "2.4349",
+    "EVToEBITDA": "13.2425",
+    "Beta": "1.2262",
+    "52WeekHigh": "148.38",
+    "52WeekLow": "101.8909",
+    "50DayMovingAverage": "139.9232",
+    "200DayMovingAverage": "127.6438",
+    "SharesOutstanding": "893523008",
+    "SharesFloat": "891896616",
+    "SharesShort": "28585173",
+    "SharesShortPriorMonth": "27009286",
+    "ShortRatio": "4.96",
+    "ShortPercentOutstanding": "0.03",
+    "ShortPercentFloat": "0.032",
+    "PercentInsiders": "0.134",
+    "PercentInstitutions": "57.742",
+    "ForwardAnnualDividendRate": "6.56",
+    "ForwardAnnualDividendYield": "0.0456",
+    "PayoutRatio": "0.7593",
+    "DividendDate": "2021-06-10",
+    "ExDividendDate": "2021-05-07",
+    "LastSplitFactor": "2:1",
+    "LastSplitDate": "1999-05-27"
+  }
+]
 
 bestMatches1 = [
     {
@@ -863,8 +937,30 @@ bestMatches1 = [
       "7. timezone": "UTC+08",
       "8. currency": "USD",
       "9. matchScore": "0.26671"
+    },
+    {
+      "1. symbol": "FK1",
+      "2. name": "Fake Company 1",
+      "3. type": "Equity",
+      "4. region": "USA",
+      "5. marketOpen": "09:30",
+      "6. marketClose": "15:00",
+      "7. timezone": "UTC+08",
+      "8. currency": "USD",
+      "9. matchScore": "0.26671"
+    },
+    {
+      "1. symbol": "FK2",
+      "2. name": "Fake Company 2",
+      "3. type": "Equity",
+      "4. region": "USA",
+      "5. marketOpen": "09:30",
+      "6. marketClose": "15:00",
+      "7. timezone": "UTC+08",
+      "8. currency": "USD",
+      "9. matchScore": "0.26671"
     }
-  ]
+]
 
 
 
