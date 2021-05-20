@@ -260,14 +260,10 @@ function addLocalStorage() {
 
 // remove from local storage
 function removeLocalStorage() {
-
-  console.log("remove Local Storage function started")
-  console.log(compName)
-  lswl = JSON.parse(localStorage.getItem('lswl'));
-  lswlnew = lswl.splice(lsCompCheck2, 1)
-  localStorage.setItem('lswl', JSON.stringify(lswl));
-  console.log(lswl)
+  lswl = lswl.filter(e => (e.ticker !== `${compDetails[0]["Symbol"]}`))
+  localStorage.lswl = JSON.stringify(lswl)
   watchlist()
+  // checkLS(`${compDetails[0]["Symbol"]}`)
 }
 
 // Add to  Watchlist
@@ -298,12 +294,6 @@ getNews()
 
 
 // Testing a new API 
-
-
-
-
-
-
 
 let searchStockValue
 function testSearch(event){
