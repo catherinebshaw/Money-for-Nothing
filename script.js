@@ -66,7 +66,6 @@ function searchButton(event) {
   // query = tempQuery.toUpperCase()
   console.log(`You searched for "${userSearched}"`)
   nameToSymbol(userSearched)
-  getAlpha(userSearched)
 }
 
 // ------------------------------------------------USER SEARCH & SEARCH OPTIONS----------------------------------------------------------------------------
