@@ -47,15 +47,11 @@ var stockSymb
 
 
 function LS() {
-  if (localStorage.getItem('lswl') === null) {
-    console.log(lswl === null)
-    lswl = []
-  } else {
-    lswl = JSON.parse(localStorage.getItem('lswl'))
-  }
+  lswl = localStorage.lswl ? JSON.parse(localStorage.lswl) : []
+  console.log(lswl)
+
   watchlist()
 }
-console.log(lswl)
 
 // Saves the last thing searched in a variable
 function searchButton(event) {
@@ -66,7 +62,6 @@ function searchButton(event) {
   // query = tempQuery.toUpperCase()
   console.log(`You searched for "${userSearched}"`)
   nameToSymbol(userSearched)
-  getAlpha(userSearched)
 }
 
 // ------------------------------------------------USER SEARCH & SEARCH OPTIONS----------------------------------------------------------------------------
@@ -74,7 +69,7 @@ async function nameToSymbol(userSearched) {
   symbolInfo = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${userSearched}&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
   console.log(symbolInfo.bestMatches[0]["1. symbol"])
 
-  for (var i = 0; i < 3; i++) {
+  for (i = 0; i < 3; i++) {
 
     query = symbolInfo.bestMatches[i]["1. symbol"]
     tempName = symbolInfo.bestMatches[i]["2. name"]
@@ -172,8 +167,8 @@ function changeCompInfo() {
   document.querySelector('#yearLow').innerHTML = `52 Week Low (USD): <strong>$${yearLow}</strong>`
   if (document.querySelector('#yearLow').innerText === "52 Week Low (USD): $undefined") { document.querySelector('#yearLow').innerHTML = '' }
 
-  if (`${qEarningsGrowthYOY}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
-  if (`${qRevenueGrowthYOY}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
+  // if (`${qEarningsGrowthYOY}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
+  // if (`${qRevenueGrowthYOY}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
 }
 //------------------------------------------------------------------------------------------------------------------------------------------
 //START NEWS API
@@ -257,7 +252,6 @@ function watchListBtn(event) {
   console.log("Watch List button pressed")
   var wlbtnresults = document.querySelector('.wlbtn').innerText
   if (wlbtnresults === "+ to Watchlist") {
-    console.log("good to go")
     addLocalStorage()
   } else {
     console.log("no go")
@@ -269,26 +263,13 @@ function watchListBtn(event) {
 // save items to local storage
 function addLocalStorage() {
   console.log("add Local Storage function started")
-  // pull Local Storage if exists
-  if (localStorage.getItem("lswl") === null) {
-    lswl = [];
-  } else {
-    lswl = JSON.parse(localStorage.getItem('lswl'));
-  }
-
   newCompany = {
-    name: compName,
-    ticker: `${stockSymb}`,
+    name: `${companyDetails[0]["Name"]}`,
+    ticker: `${companyDetails[0]["Symbol"]}`,
   }
 
-  // if section is not blank proceed else stop
-  if (compName != null) {
-    lswl.push(newCompany);
-  } else {
-    alert("Search for a company using the search bar")
-  }
-  // Push updated array with new item back to Local Storage
-  localStorage.setItem('lswl', JSON.stringify(lswl));
+    lswl.find(e => (e.name===`${newCompany.name}`)) ? 
+      console.log("already on list") :  (console.log("not yet on list"), lswl.push(newCompany),localStorage.lswl=JSON.stringify(lswl))
   watchlist()
 }
 
@@ -307,11 +288,11 @@ function removeLocalStorage() {
 // Add to  Watchlist
 function watchlist() {
   document.querySelector('.list-group').innerHTML = ""
-  if (localStorage.lswl === undefined) {
-    lswl = []
-  } else {
-    lswl = JSON.parse(localStorage.getItem('lswl'))
-    console.log(lswl)
+  // if (localStorage.lswl === undefined) {
+  //   lswl = []
+  // } else {
+  //   lswl = JSON.parse(localStorage.getItem('lswl'))
+  //   console.log(lswl)
 
     var lswlLength = lswl.length
     console.log(lswl)
@@ -323,7 +304,7 @@ function watchlist() {
 
       document.querySelector('.list-group').innerHTML += `<li class="wlBtn"><button onclick="wlBtnSearch('${tick}')"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button></li>`
     }
-  }
+  // }
 
 }
 
@@ -378,7 +359,7 @@ async function getAlpha(autoQuery){
 
   
 
-  stockCompanySearch = bestMatches
+  stockCompanySearch = bestMatches1
   console.log(stockCompanySearch)
   let stockCompanySearchResults=stockCompanySearch
 
@@ -407,7 +388,9 @@ async function alphaStockSearch(event){
 
     console.log(corpQuote[0]["02. open"])
 
-    console.log(corpQuote[0]["05. price"])
+    console.log(corpQuote[0]["08. previous close"])
+    console.log(corpQuote[0]["07. latest trading day"])
+
 
     compDetails = companyDetails.filter(e=>e["symbol"]=== event)
     console.log(companyDetails)
@@ -418,8 +401,37 @@ async function alphaStockSearch(event){
     console.log(companyDetails[0]["Name"])
 
     console.log(companyDetails[0]["Description"])
-    
+    console.log(companyDetails[0]["52WeekHigh"])
+    console.log(companyDetails[0]["52WeekLow"])
+    console.log(companyDetails[0]["Currency"])
+    console.log(companyDetails[0]["Exchange"])
+    console.log(companyDetails[0]["Sector"])
+    console.log(companyDetails[0]["QuarterlyRevenueGrowthYOY"])
 
+    console.log(companyDetails[0]["QuarterlyEarningsGrowthYOY"])
+
+
+
+
+    document.querySelector('#companyName').innerHTML = `<strong>${companyDetails[0]["Name"]}</strong>`
+    document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${companyDetails[0]["Sector"]}</strong>`
+    document.querySelector('#sharePrice').innerHTML = `Share Price (${companyDetails[0]["Currency"]}):  <strong>$ ${corpQuote[0]["08. previous close"]}</strong>`
+    document.querySelector('#yearHigh').innerHTML = `52 Week High:  <strong>$ ${companyDetails[0]["52WeekHigh"]}</strong>`
+    document.querySelector('#yearLow').innerHTML = `52 Week Low:  <strong>$ ${companyDetails[0]["52WeekLow"]}</strong>`
+  
+    document.querySelector('#cardExchange').innerHTML = `Exchange:  <strong>${companyDetails[0]["Exchange"]}</strong>`
+    document.querySelector('#dateNow').innerHTML = `As of:  <strong>${corpQuote[0]["07. latest trading day"]}</strong>`
+   
+    document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth::  <span id="cardQRevenue" ><strong>${companyDetails[0]["QuarterlyRevenueGrowthYOY"]}</strong></span>`
+    document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth::  <span id="cardQEarnings" ><strong>${companyDetails[0]["QuarterlyEarningsGrowthYOY"]}</strong></span>`
+    // document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${companyDetails[0]["Sector"]}</strong>`
+    // document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${companyDetails[0]["Sector"]}</strong>`
+
+    
+   
+
+    if (`${companyDetails[0]["QuarterlyRevenueGrowthYOY"]}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
+    if (`${companyDetails[0]["QuarterlyEarningsGrowthYOY"]}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
 
 
 
@@ -553,7 +565,7 @@ companyDetails = [
   "LastSplitDate": "1999-05-27"
 }]
 
-bestMatches = [
+bestMatches1 = [
     {
       "1. symbol": "TESO",
       "2. name": "Tesco Corporation USA",
