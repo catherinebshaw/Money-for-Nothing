@@ -240,6 +240,7 @@ function watchListBtn(event) {
   } else {
     console.log("no go")
     removeLocalStorage()
+
   }
 }
 
@@ -255,6 +256,7 @@ function addLocalStorage() {
   lswl.push(newCompany)
   localStorage.lswl=JSON.stringify(lswl)
 
+  checkLS( `${compDetails[0]["Symbol"]}`)
   watchlist()
 }
 
@@ -262,12 +264,12 @@ function addLocalStorage() {
 function removeLocalStorage() {
   lswl = lswl.filter(e => (e.ticker !== `${compDetails[0]["Symbol"]}`))
   localStorage.lswl = JSON.stringify(lswl)
-  watchlist()
-  // checkLS(`${compDetails[0]["Symbol"]}`)
+  watchlist(`${compDetails[0]["Symbol"]}`)
+  checkLS(`${compDetails[0]["Symbol"]}`)
 }
 
 // Add to  Watchlist
-function watchlist() {
+function watchlist(removedstock) {
   document.querySelector('.list-group').innerHTML = ""
   var lswlLength = lswl.length
   console.log(lswl)
@@ -279,7 +281,7 @@ function watchlist() {
 
     document.querySelector('.list-group').innerHTML += `<li class="wlBtn"> <button type="button" class="btn btn-outline-light" onClick="wlBtnSearch('${tick}')"><span id="stkName">${nam}</span> - <span id = "stkSymb">${tick}</span></button>    </li>`  
   }
-  checkLS(tick)
+  // checkLS(tick)
 }
 
 //when the watchlist button is pushed, pass the company name via the search function trigger
@@ -291,6 +293,7 @@ function wlBtnSearch(tick) {
 
 LS()
 getNews()
+
 
 
 // Testing a new API 
@@ -310,11 +313,9 @@ function testSearch(event){
     console.log(searchStockValue.length)
     console.log(Boolean(stockCompanySearchSymbols.find(e => (e!==`${searchStockValue}`))))
     alphaStockSearch(searchStockValue)
-    // checkLS(searchStockValue)
     
   }else {console.log(`keep searching`)
   getAlpha(searchStockValue)}
-  // checkLS(searchStockValue)
 }
 
 
@@ -368,6 +369,7 @@ async function alphaStockSearch(event){
    
     document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth::  <span id="cardQRevenue" ><strong>${compDetails[0]["QuarterlyRevenueGrowthYOY"]}</strong></span>`
     document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth::  <span id="cardQEarnings" ><strong>${compDetails[0]["QuarterlyEarningsGrowthYOY"]}</strong></span>`
+    
 
 
     if (`${compDetails[0]["QuarterlyRevenueGrowthYOY"]}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
@@ -396,7 +398,7 @@ async function alphaStockSearch(event){
 
 
 }
-
+checkLS()
 // a bunch of JSON Data for testing - kept it down here to avoid creating a server file to serve them up
 
 globalQuote =[

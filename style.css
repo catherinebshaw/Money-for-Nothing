@@ -101,5 +101,11 @@ h5 {
 
 
 .testSearchDiv{
-    margin: 50px;
+    margin: 50px 0px;
+}
+
+.wlbtn {
+    /* width: 25%; */
+    
+    /* margin: 0px 100px ; */
 }
