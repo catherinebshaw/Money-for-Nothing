@@ -47,11 +47,11 @@
         </div>  
        
 
-        <div class="row" id="topHalf">
+        <div class="row " id="topHalf">
 
-            <div class="col-md-4">
-                <div class="userCard" id="watchlist">
-                    <div class="card-header">
+            <div class="col-md-4 ">
+                <div class="userCard" >
+                    <div class="card-header" id="watchlistheader">
                         Watchlist
                     </div>
                     <ul class="list-group">
@@ -60,43 +60,69 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
-                <div class="userCard " data-bs-toggle="modal" data-bs-target="#exampleModal" id="porfolio">
-                    <div class="row">
-                        <h3 id="companyName">Company Name</h3>
-                        <hr>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <p class="card-text" id="cardSector">Sector: </p>
-                                    <p class="card-text" id="cardExchange">Exchange: </p>
+            <div class="col-md-8 " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <div class="userCard">
 
-                                    <h5 id="YOY">Year over Year</h5>
-                                    <p class="card-text" id="allEarnings">Quarter Earnings Growth: <span
-                                            id="cardQEarnings"></span></p>
-                                    <p class="card-text" id="allRevenue">Quarter Rev Growth: <span
-                                            id="cardQRevenue"></span></p>
-                                </div>
-                                <div class="col-6">
-                                    <p id="dateNow">As of: </p>
-                                    <p id="sharePrice">Share Price (USD):</p>
-                                    <p id="yearHigh">52 Week High: </p>
-                                    <p id="yearLow">52 Week Low: </p>
+                    <h3 id="companyName">Company Name</h3>
+                    <hr>
+                    <div class="container row">
+                        <div class="col">
+                            <small id="dateNow">As of: </small>
+                            <small class="card-text float-end" id="cardSector">Sector: </small>
+                        </div>
+                    </div>
+                    <br/>
 
-                                </div>
+
+                    <div class="card-body" id="cardHeaders">
+                        <!-- <div class="row">
+                            <div class="col">
+                                <p id="dateNow">As of: </p>
+
+
                             </div>
-                            <div class="row">
-                                <div class="col" id="addRemoveBtn">
-                                    <button onclick="watchListBtn(event)" type="button"
-                                    class="wlbtn btn btn-success float-end">+ to Watchlist</button>
+
+                        </div> -->
+                        <div class="row container">
+                            <div class="col-md-6 my-4 cardData">
+
+                                <h5 class="mb-3" id="cardExchange">Exchange: </h5>
+                                <!-- <p id="dateNow">As of: </p> -->
+                                <p class="card-text" id="sharePrice">Share Price (USD):</p>
+                                <p class="card-text" id="yearHigh">52 Week High: </p>
+                                <p class="card-text" id="yearLow">52 Week Low: </p>
                             </div>
+                            <div class="col-md-6 my-4 cardData">
+                                <h5 class="mb-3"id="YOY">Year over Year</h5>
+                                <p class="card-text" id="allEarnings">Quarter Earnings Growth: <span
+                                    id="cardQEarnings"></span></p>
+                                <p class="card-text" id="allRevenue">Quarter Rev Growth: <span
+                                    id="cardQRevenue"></span></p>
+
 
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col" id="addRemoveBtn">
+                                <button onclick="watchListBtn(event)" type="button"
+                                class="wlbtn btn btn-success float-end">+ to Watchlist</button>
+                            </div>
+
+                        </div>
                     </div>
+                    <!-- <div class="card-footer bg-transparent border-success">Footer</div> -->
+
                 </div>
+                        
             </div>
         </div>
+
+
+
+
+
+
+
 
 
 
@@ -138,12 +164,12 @@
    
     </div>
 
-      <!-- Modal -->
+        <!-- Modal -->
         <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">`${compDetails[0]["Name"]}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

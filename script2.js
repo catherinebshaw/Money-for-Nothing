@@ -233,20 +233,24 @@ function checkLS(ssymbol) {
 
 // Watchlist button trigger (add or remove from list)
 function watchListBtn(event) {
+  event.preventDefault()
+  event.stopPropagation()
+  
   console.log("Watch List button pressed")
   var wlbtnresults = document.querySelector('.wlbtn').innerText
   if (wlbtnresults === "+ to Watchlist") {
-    addLocalStorage()
+    addLocalStorage(event)
+
   } else {
     console.log("no go")
-    removeLocalStorage()
+    removeLocalStorage(event)
 
   }
 }
 
 
 // save items to local storage
-function addLocalStorage() {
+function addLocalStorage(event) {
   console.log("add Local Storage function started")
   newCompany = {
     name: `${compDetails[0]["Name"]}`,
@@ -365,7 +369,7 @@ async function alphaStockSearch(event){
     document.querySelector('#yearLow').innerHTML = `52 Week Low:  <strong>$ ${compDetails[0]["52WeekLow"]}</strong>`
   
     document.querySelector('#cardExchange').innerHTML = `Exchange:  <strong>${compDetails[0]["Exchange"]}</strong>`
-    document.querySelector('#dateNow').innerHTML = `As of:  <strong>${corpQuote[0]["07. latest trading day"]}</strong>`
+    document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${corpQuote[0]["07. latest trading day"]}</strong></small>`
    
     document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth::  <span id="cardQRevenue" ><strong>${compDetails[0]["QuarterlyRevenueGrowthYOY"]}</strong></span>`
     document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth::  <span id="cardQEarnings" ><strong>${compDetails[0]["QuarterlyEarningsGrowthYOY"]}</strong></span>`
