@@ -60,15 +60,21 @@
                 </div>
             </div>
 
-            <div class="col-md-8 " data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <div class="col-md-8 " >
                 <div class="userCard">
 
                     <h3 id="companyName">Company Name</h3>
                     <hr>
                     <div class="container row">
                         <div class="col">
-                            <small id="dateNow">As of: </small>
-                            <small class="card-text float-end" id="cardSector">Sector: </small>
+                           <h6> <small class="card-text" id="cardSector">Sector: </small></h6>
+                            <h6><small class="mb-3" id="cardExchange">Exchange: </small></h6>
+
+                        </div>
+                        <div class="col">
+                            <small class="card-text float-end" id="dateNow">As of: </small>
+
+
                         </div>
                     </div>
                     <br/>
@@ -86,7 +92,6 @@
                         <div class="row container">
                             <div class="col-md-6 my-4 cardData">
 
-                                <h5 class="mb-3" id="cardExchange">Exchange: </h5>
                                 <!-- <p id="dateNow">As of: </p> -->
                                 <p class="card-text" id="sharePrice">Share Price (USD):</p>
                                 <p class="card-text" id="yearHigh">52 Week High: </p>
@@ -165,7 +170,7 @@
     </div>
 
         <!-- Modal -->
-        <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -182,7 +187,7 @@
                 </div>
             </div>
         </div>
-    
+     -->
     <!--footer-->
     <footer class="fixed-bottom mt-auto bg-light text-center ">
         <span class="text-center">
