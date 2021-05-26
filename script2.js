@@ -307,12 +307,12 @@ function testSearch(event){
   console.log(event)
   console.log(event.target)
 
-  searchStockValue = document.querySelector('#testinput').value
+  searchStockValue = document.querySelector('#testinput').value.toUpperCase()
   console.log(searchStockValue)
 
 
 
-  if((searchStockValue.length > 1) && (stockCompanySearchSymbols.find(e => (e===`${searchStockValue}`)))){
+  if((searchStockValue.length > 2) && (stockCompanySearchSymbols.find(e => (e===`${searchStockValue}`)))){
     console.log(`we fount it `)
     console.log(searchStockValue.length)
     console.log(Boolean(stockCompanySearchSymbols.find(e => (e!==`${searchStockValue}`))))
@@ -327,10 +327,25 @@ let stockCompanySearch = []
 let stockCompanySearchSymbols = []
 
 async function getAlpha(autoQuery){
+  console.log(autoQuery)
 
   // let stockCompanySearch = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${autoQuery}&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
-  let stockCompanySearch = await fetch (`https://finnhub.io/api/v1/search?q=${autoQuery}&token=sandbox_c2m4iqqad3idnodd7te0`).then(r => r.json())
-  stockCompanySearchResults = stockCompanySearch.result
+  // let stockCompanySearch = await fetch (`https://finnhub.io/api/v1/search?q=${autoQuery}exchange=US&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
+  // stockCompanySearchResults = stockCompanySearch.result
+  
+ 
+
+  stockCompanySearch = await fetch ('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c2m4iqqad3idnodd7tdg').then(r=>r.json())
+  let stockCompanySearchResults = stockCompanySearch.filter(e => e.description.includes(`${autoQuery}`) || e.displaySymbol.includes(`${autoQuery}`))
+
+
+
+
+
+
+
+
+
   
 
   // stockCompanySearch = bestMatches1
@@ -340,10 +355,10 @@ async function getAlpha(autoQuery){
   document.querySelector('#datalistOptions').innerHTML = ""
   stockCompanySearchSymbols = []
 
-  stockCompanySearchResults.forEach(stock =>  {
+  stockCompanySearchResults.slice(0,11).forEach(stock =>  {
     document.querySelector('#datalistOptions').innerHTML +=
     ` <option value=${stock["displaySymbol"]} > ${stock["description"]}</option>`
-    stockCompanySearchSymbols.push(`${stock["displaySymbol"]}`)
+    stockCompanySearchSymbols.push(`${stock["description"]}`)
   })
 
   console.log(`symbol array values`, stockCompanySearchSymbols)  
@@ -364,14 +379,14 @@ async function alphaStockSearch(symbolSelected){
     // console.log(compDetails)
 
 
-      compDetails  = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbolSelected}&apikey=RT7QRH1PKA05QUJ7`).then(r => r.json())
-      corpQuote = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbolSelected}&apikey=RT7QRH1PKA05QUJ7`).then(r => r.json())
+      compDetails  = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
+      corpQuote = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
 
       
 
 
-    console.log(`this is alpha fetch`, corpQuote)
-    console.log(`this is alpha fetch`, compDetails)
+    console.log(`this is alpha corpQuote`, corpQuote)
+    console.log(`this is alpha CompDetails`, compDetails)
 
 
 
@@ -379,7 +394,7 @@ async function alphaStockSearch(symbolSelected){
     
   document.querySelector('#companyName').innerHTML = `<strong>${compDetails["Name"]}</strong>`
   document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${compDetails["Sector"]}</strong>`
-  document.querySelector('#sharePrice').innerHTML = `Share Price (${compDetails["Currency"]}):  <strong>$ ${corpQuote["Global Quote"]["08. previous close"]}</strong>`
+  document.querySelector('#sharePrice').innerHTML = `Share Price (${compDetails["Currency"]}):  <strong>$ ${corpQuote.pc}</strong>`
   document.querySelector('#yearHigh').innerHTML = `52 Week High:  <strong>$ ${compDetails["52WeekHigh"]}</strong>`
   document.querySelector('#yearLow').innerHTML = `52 Week Low:  <strong>$ ${compDetails["52WeekLow"]}</strong>`
   document.querySelector('#cardExchange').innerHTML = `Exchange:  <strong>${compDetails["Exchange"]}</strong>`
@@ -387,8 +402,7 @@ async function alphaStockSearch(symbolSelected){
   document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth::  <span id="cardQEarnings" ><strong>${compDetails["QuarterlyEarningsGrowthYOY"]}</strong></span>`
 
 
-  document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${corpQuote["Global Quote"]["01. symbol"]}</strong></small>`
-  document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${corpQuote["Global Quote"]["07. latest trading day"]}</strong></small>`
+  document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${compDetails.ticker}</strong></small>`
   
 
 
@@ -982,8 +996,6 @@ checkLS()
 //       "9. matchScore": "0.26671"
 //     }
 // ]
-
-
 
 
 
