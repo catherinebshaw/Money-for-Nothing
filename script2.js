@@ -318,7 +318,6 @@ function testSearch(event){
 
     
   }else if (stockCompanySearchResults.find(e=>e.displaySymbol===searchStockValue)) {
-    console.log("FUCK YES")
     console.log(searchStockValue)
     alphaStockSearch(searchStockValue)
 
@@ -387,17 +386,18 @@ async function alphaStockSearch(symbolSelected){
     // console.log(compDetails)
 
 
-      compDetails  = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
-      corpQuote = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
-      basicFinancials = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${symbolSelected}&metric=all&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
+    compDetails  = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
+    corpQuote = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
+    basicFinancials = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${symbolSelected}&metric=all&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
       
 
 
     console.log(`this is alpha corpQuote`, corpQuote)
     console.log(`this is alpha CompDetails`, compDetails)
 
-  document.querySelector('#sharePrice').innerHTML = `Share Price (USD):  <strong>$ ${corpQuote.c}</strong>`
-  document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${corpQuote.t}</strong></small>`
+
+    document.querySelector('#sharePrice').innerHTML = `Share Price (USD):  <strong>$ ${corpQuote.c}</strong>`
+    document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${corpQuote.t}</strong></small>`
 
 
 
@@ -409,8 +409,7 @@ async function alphaStockSearch(symbolSelected){
   document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth:  <span id="cardQEarnings" ><strong>${basicFinancials.metric["epsGrowthQuarterlyYoy"]}</strong></span>`
 
 
-
-  document.querySelector('#companyName').innerHTML = `<strong>${compDetails["name"]}</strong>`
+  document.querySelector('#companyName').innerHTML = `<img style="width:50px" src=${compDetails.logo} /><strong>  ${compDetails["name"]}</strong>`
 
   document.querySelector('#cardheadQuarters').innerHTML = `Headquarters: <strong>${compDetails["country"]}</strong>`
   document.querySelector('#cardType').innerHTML = `Sector:  <strong>${compDetails["finnhubIndustry"]}</strong>`
