@@ -376,6 +376,15 @@ async function alphaStockSearch(symbolSelected){
     corpQuote = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
     basicFinancials = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${symbolSelected}&metric=all&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
       
+    let timeStampHumanDate = new Date(corpQuote.t*1000)
+    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    var months = ["January","February","March","April","May","June","July", "August","September","October","November","December"];
+
+
+    let timeStampMonth = months[timeStampHumanDate.getMonth()]
+    let timeStampDay = days[timeStampHumanDate.getDay()]
+    let timeStampDate = timeStampHumanDate.getDate()
+    let timeStampYear = timeStampHumanDate.getFullYear()
 
 
     console.log(`this is alpha corpQuote`, corpQuote)
@@ -383,7 +392,7 @@ async function alphaStockSearch(symbolSelected){
 
 
     document.querySelector('#sharePrice').innerHTML = `Share Price (USD):  <strong>$ ${corpQuote.c}</strong>`
-    document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${corpQuote.t}</strong></small>`
+    document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${timeStampDay} ${timeStampMonth} ${timeStampDate}, ${timeStampYear}</strong></small>`
 
 
 
