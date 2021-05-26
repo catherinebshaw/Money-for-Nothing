@@ -304,8 +304,6 @@ getNews()
 
 let searchStockValue
 function testSearch(event){
-  console.log(event)
-  console.log(event.target)
 
   searchStockValue = document.querySelector('#testinput').value.toUpperCase()
   console.log(searchStockValue)
@@ -317,14 +315,22 @@ function testSearch(event){
     console.log(searchStockValue.length)
     console.log(Boolean(stockCompanySearchSymbols.find(e => (e!==`${searchStockValue}`))))
     alphaStockSearch(searchStockValue)
+
     
-  }else {console.log(`keep searching`)
+  }else if (stockCompanySearchResults.find(e=>e.displaySymbol===searchStockValue)) {
+    console.log("FUCK YES")
+    console.log(searchStockValue)
+    alphaStockSearch(searchStockValue)
+
+
+  }  else {console.log(`keep searching`)
   getAlpha(searchStockValue)}
 }
 
 
 let stockCompanySearch = []
 let stockCompanySearchSymbols = []
+let stockCompanySearchResults = []
 
 async function getAlpha(autoQuery){
   console.log(autoQuery)
@@ -336,7 +342,8 @@ async function getAlpha(autoQuery){
  
 
   stockCompanySearch = await fetch ('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c2m4iqqad3idnodd7tdg').then(r=>r.json())
-  let stockCompanySearchResults = stockCompanySearch.filter(e => e.description.includes(`${autoQuery}`) || e.displaySymbol.includes(`${autoQuery}`))
+  stockCompanySearchResults = stockCompanySearch.filter(e => e.description.includes(`${autoQuery}`) || e.displaySymbol.includes(`${autoQuery}`))
+  console.log(stockCompanySearchResults)
 
 
 
@@ -358,7 +365,7 @@ async function getAlpha(autoQuery){
   stockCompanySearchResults.slice(0,11).forEach(stock =>  {
     document.querySelector('#datalistOptions').innerHTML +=
     ` <option value=${stock["displaySymbol"]} > ${stock["description"]}</option>`
-    stockCompanySearchSymbols.push(`${stock["description"]}`)
+    stockCompanySearchSymbols.push({symbol: `${stock["displaySymbol"]}`, name: `${stock["description"]}`})
   })
 
   console.log(`symbol array values`, stockCompanySearchSymbols)  
@@ -367,6 +374,7 @@ async function getAlpha(autoQuery){
 
 let corpQuote = []
 let compDetails = []
+let basicFinancials = []
 async function alphaStockSearch(symbolSelected){
   // searchStockValue = document.querySelector('#testinput').value = ""
   console.log(`this is the passed symbol`, symbolSelected)
@@ -381,50 +389,59 @@ async function alphaStockSearch(symbolSelected){
 
       compDetails  = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
       corpQuote = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbolSelected}&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
-
+      basicFinancials = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${symbolSelected}&metric=all&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
       
 
 
     console.log(`this is alpha corpQuote`, corpQuote)
     console.log(`this is alpha CompDetails`, compDetails)
 
+  document.querySelector('#sharePrice').innerHTML = `Share Price (USD):  <strong>$ ${corpQuote.c}</strong>`
+  document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${corpQuote.t}</strong></small>`
 
 
 
-    
-  document.querySelector('#companyName').innerHTML = `<strong>${compDetails["Name"]}</strong>`
-  document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${compDetails["Sector"]}</strong>`
-  document.querySelector('#sharePrice').innerHTML = `Share Price (${compDetails["Currency"]}):  <strong>$ ${corpQuote.pc}</strong>`
-  document.querySelector('#yearHigh').innerHTML = `52 Week High:  <strong>$ ${compDetails["52WeekHigh"]}</strong>`
-  document.querySelector('#yearLow').innerHTML = `52 Week Low:  <strong>$ ${compDetails["52WeekLow"]}</strong>`
-  document.querySelector('#cardExchange').innerHTML = `Exchange:  <strong>${compDetails["Exchange"]}</strong>`
-  document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth::  <span id="cardQRevenue" ><strong>${compDetails["QuarterlyRevenueGrowthYOY"]}</strong></span>`
-  document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth::  <span id="cardQEarnings" ><strong>${compDetails["QuarterlyEarningsGrowthYOY"]}</strong></span>`
 
 
-  document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${compDetails.ticker}</strong></small>`
+  document.querySelector('#yearHigh').innerHTML = `52 Week High:  <strong>$ ${basicFinancials.metric["52WeekHigh"]}</strong>`
+  document.querySelector('#yearLow').innerHTML = `52 Week Low:  <strong>$ ${basicFinancials.metric["52WeekLow"]}</strong>`
+  document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth:  <span id="cardQRevenue" ><strong>${basicFinancials.metric["revenueGrowthQuarterlyYoy"]}</strong></span>`
+  document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth:  <span id="cardQEarnings" ><strong>${basicFinancials.metric["epsGrowthQuarterlyYoy"]}</strong></span>`
+
+
+
+  document.querySelector('#companyName').innerHTML = `<strong>${compDetails["name"]}</strong>`
+
+  document.querySelector('#cardheadQuarters').innerHTML = `Headquarters: <strong>${compDetails["country"]}</strong>`
+  document.querySelector('#cardType').innerHTML = `Sector:  <strong>${compDetails["finnhubIndustry"]}</strong>`
+
+  
+
+
+  // logo
+  
+  // url
   
 
 
 
-    // document.querySelector('#companyName').innerHTML = `<strong>${compDetails[0]["Name"]}</strong>`
-    // document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${compDetails[0]["Sector"]}</strong>`
-    // document.querySelector('#sharePrice').innerHTML = `Share Price (${compDetails[0]["Currency"]}):  <strong>$ ${corpQuote[0]["08. previous close"]}</strong>`
-    // document.querySelector('#yearHigh').innerHTML = `52 Week High:  <strong>$ ${compDetails[0]["52WeekHigh"]}</strong>`
-    // document.querySelector('#yearLow').innerHTML = `52 Week Low:  <strong>$ ${compDetails[0]["52WeekLow"]}</strong>`
-    // document.querySelector('#cardExchange').innerHTML = `Exchange:  <strong>${compDetails[0]["Exchange"]}</strong>`
 
-    // document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${corpQuote[0]["01. symbol"]}</strong></small>`
-    // document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${corpQuote[0]["07. latest trading day"]}</strong></small>`
 
-   
-    // document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth::  <span id="cardQRevenue" ><strong>${compDetails[0]["QuarterlyRevenueGrowthYOY"]}</strong></span>`
-    // document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth::  <span id="cardQEarnings" ><strong>${compDetails[0]["QuarterlyEarningsGrowthYOY"]}</strong></span>`
     
+  // document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${compDetails["Sector"]}</strong>`
+
+  // document.querySelector('#cardExchange').innerHTML = `Exchange:  <strong>${compDetails["Exchange"]}</strong>`
 
 
-    if (`${compDetails["QuarterlyRevenueGrowthYOY"]}` < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
-    if (`${compDetails["QuarterlyEarningsGrowthYOY"]}` < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
+
+  
+
+
+
+
+
+    if (basicFinancials.metric["revenueGrowthQuarterlyYoy"] < 0) { document.querySelector("#cardQRevenue").style.color = "red" }
+    if (basicFinancials.metric["epsGrowthQuarterlyYoy"] < 0) { document.querySelector("#cardQEarnings").style.color = "red" }
 
 
 
