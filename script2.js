@@ -233,43 +233,41 @@ function checkLS(ssymbol) {
 
 // Watchlist button trigger (add or remove from list)
 function watchListBtn(event) {
-  event.preventDefault()
-  event.stopPropagation()
   
   console.log("Watch List button pressed")
   var wlbtnresults = document.querySelector('.wlbtn').innerText
   if (wlbtnresults === "+ to Watchlist") {
-    addLocalStorage(event)
+    addLocalStorage()
 
   } else {
     console.log("no go")
-    removeLocalStorage(event)
+    removeLocalStorage()
 
   }
 }
 
 
 // save items to local storage
-function addLocalStorage(event) {
+function addLocalStorage() {
   console.log("add Local Storage function started")
   newCompany = {
-    name: `${compDetails["Name"]}`,
-    ticker: `${compDetails["Symbol"]}`,
+    name: `${compDetails["name"]}`,
+    ticker: `${searchStockValue}`,
   }
 
   lswl.push(newCompany)
   localStorage.lswl=JSON.stringify(lswl)
 
-  checkLS( `${compDetails["Symbol"]}`)
+  checkLS( `${searchStockValue}`)
   watchlist()
 }
 
 // remove from local storage
 function removeLocalStorage() {
-  lswl = lswl.filter(e => (e.ticker !== `${compDetails["Symbol"]}`))
+  lswl = lswl.filter(e => (e.ticker !== `${searchStockValue}`))
   localStorage.lswl = JSON.stringify(lswl)
-  watchlist(`${compDetails["Symbol"]}`)
-  checkLS(`${compDetails["Symbol"]}`)
+  watchlist(`${searchStockValue}`)
+  checkLS(`${searchStockValue}`)
 }
 
 // Add to  Watchlist
@@ -290,6 +288,8 @@ function watchlist(removedstock) {
 
 //when the watchlist button is pushed, pass the company name via the search function trigger
 function wlBtnSearch(tick) {
+ 
+  console.log(tick)
   alphaStockSearch(tick)
   checkLS(tick)
 }
@@ -334,25 +334,11 @@ let stockCompanySearchResults = []
 async function getAlpha(autoQuery){
   console.log(autoQuery)
 
-  // let stockCompanySearch = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${autoQuery}&apikey=RTGQ9JMEEPU9J881`).then(r => r.json())
-  // let stockCompanySearch = await fetch (`https://finnhub.io/api/v1/search?q=${autoQuery}exchange=US&token=c2m4iqqad3idnodd7tdg`).then(r => r.json())
-  // stockCompanySearchResults = stockCompanySearch.result
-  
- 
-
   stockCompanySearch = await fetch ('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c2m4iqqad3idnodd7tdg').then(r=>r.json())
   stockCompanySearchResults = stockCompanySearch.filter(e => e.description.includes(`${autoQuery}`) || e.displaySymbol.includes(`${autoQuery}`))
   console.log(stockCompanySearchResults)
 
-
-
-
-
-
-
-
-
-  
+ 
 
   // stockCompanySearch = bestMatches1
   console.log(stockCompanySearch)
@@ -417,7 +403,7 @@ async function alphaStockSearch(symbolSelected){
   
 
 
-  // logo
+ 
   
   // url
   
@@ -425,15 +411,6 @@ async function alphaStockSearch(symbolSelected){
 
 
 
-
-    
-  // document.querySelector('#cardSector').innerHTML = `Sector:  <strong>${compDetails["Sector"]}</strong>`
-
-  // document.querySelector('#cardExchange').innerHTML = `Exchange:  <strong>${compDetails["Exchange"]}</strong>`
-
-
-
-  
 
 
 
@@ -444,8 +421,8 @@ async function alphaStockSearch(symbolSelected){
 
 
 
-
-    checkLS(compDetails["Symbol"])
+  searchStockValue = symbolSelected
+    checkLS(symbolSelected)
 
 
 
