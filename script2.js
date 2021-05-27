@@ -389,6 +389,7 @@ async function alphaStockSearch(symbolSelected){
 
     console.log(`this is alpha corpQuote`, corpQuote)
     console.log(`this is alpha CompDetails`, compDetails)
+    console.log(`this is alpha basicFinancials`, basicFinancials)
 
 
     document.querySelector('#sharePrice').innerHTML = `Share Price (USD):  <span>$ ${corpQuote.c}</span>`
@@ -398,8 +399,8 @@ async function alphaStockSearch(symbolSelected){
 
 
 
-  document.querySelector('#yearHigh').innerHTML = `52 Week High:  <span>$ ${basicFinancials.metric["52WeekHigh"]} </span>`
-  document.querySelector('#yearLow').innerHTML = `52 Week Low:   <span>$ ${basicFinancials.metric["52WeekLow"]} </span>`
+  document.querySelector('#yearHigh').innerHTML = `52 Week High:  <span>$ ${(basicFinancials.metric["52WeekHigh"]).toFixed(2)} </span>`
+  document.querySelector('#yearLow').innerHTML = `52 Week Low:   <span>$ ${(basicFinancials.metric["52WeekLow"]).toFixed(2)} </span>`
   document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth:  <span id="cardQRevenue" >${(basicFinancials.metric["revenueGrowthQuarterlyYoy"]).toFixed(2)}%</span>`
   document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth:  <span id="cardQEarnings" >${(basicFinancials.metric["epsGrowthQuarterlyYoy"]).toFixed(2)}%</span>`
 
