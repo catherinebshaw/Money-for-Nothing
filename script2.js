@@ -391,23 +391,23 @@ async function alphaStockSearch(symbolSelected){
     console.log(`this is alpha CompDetails`, compDetails)
 
 
-    document.querySelector('#sharePrice').innerHTML = `Share Price (USD):  <strong>$ ${corpQuote.c}</strong>`
-    document.querySelector('#dateNow').innerHTML = `<small>As of:  <strong>${timeStampDay} ${timeStampMonth} ${timeStampDate}, ${timeStampYear}</strong></small>`
+    document.querySelector('#sharePrice').innerHTML = `Share Price (USD):  <span>$ ${corpQuote.c}</span>`
+    document.querySelector('#dateNow').innerHTML = `<small>As of:  ${timeStampDay} ${timeStampMonth} ${timeStampDate}, ${timeStampYear}</small>`
 
 
 
 
 
-  document.querySelector('#yearHigh').innerHTML = `52 Week High:  <strong>$ ${basicFinancials.metric["52WeekHigh"]}</strong>`
-  document.querySelector('#yearLow').innerHTML = `52 Week Low:  <strong>$ ${basicFinancials.metric["52WeekLow"]}</strong>`
-  document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth:  <span id="cardQRevenue" ><strong>${basicFinancials.metric["revenueGrowthQuarterlyYoy"]}</strong></span>`
-  document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth:  <span id="cardQEarnings" ><strong>${basicFinancials.metric["epsGrowthQuarterlyYoy"]}</strong></span>`
+  document.querySelector('#yearHigh').innerHTML = `52 Week High:  <span>$ ${basicFinancials.metric["52WeekHigh"]} </span>`
+  document.querySelector('#yearLow').innerHTML = `52 Week Low:   <span>$ ${basicFinancials.metric["52WeekLow"]} </span>`
+  document.querySelector('#allEarnings').innerHTML = `Quarter Earnings Growth:  <span id="cardQRevenue" >${(basicFinancials.metric["revenueGrowthQuarterlyYoy"]).toFixed(2)}%</span>`
+  document.querySelector('#allRevenue').innerHTML = `Quarter Rev Growth:  <span id="cardQEarnings" >${(basicFinancials.metric["epsGrowthQuarterlyYoy"]).toFixed(2)}%</span>`
 
 
-  document.querySelector('#companyName').innerHTML = `<img style="width:50px" src=${compDetails.logo} /><strong>  ${compDetails["name"]}</strong>`
+  document.querySelector('#companyName').innerHTML = `<img style="width:50px" src=${compDetails.logo} />  ${compDetails["name"]}`
 
-  document.querySelector('#cardheadQuarters').innerHTML = `Headquarters: <strong>${compDetails["country"]}</strong>`
-  document.querySelector('#cardType').innerHTML = `Sector:  <strong>${compDetails["finnhubIndustry"]}</strong>`
+  document.querySelector('#cardheadQuarters').innerHTML = `Headquarters: ${compDetails["country"]}`
+  document.querySelector('#cardType').innerHTML = `Sector:  ${compDetails["finnhubIndustry"]}`
 
   
 

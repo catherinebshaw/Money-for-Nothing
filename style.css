@@ -115,3 +115,14 @@ h5 {
 #newsMain{
     margin-bottom: 100px;
 }
+
+
+#YOY, #allEarnings, #allRevenue, #sharePrice, #yearHigh, #yearLow{
+    font-weight: bolder;
+
+}
+
+#allEarnings span, #allRevenue span, #sharePrice span, #yearHigh span, #yearLow span{
+    font-weight: normal;
+
+}

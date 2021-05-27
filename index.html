@@ -21,32 +21,12 @@
         <h1>Stock Tracker</h1>
     </div>
     <div class="container">
-
-        <!-- <p id="searchResultsHere"></p>
-        <div class="input-group my-3">
-            <input type="text" class="form-control" id="input" placeholder="Enter Stock Symbol Here" aria-label="search"
-                aria-describedby="search">
-            <button onclick="searchButton(event)" class="btn btn-secondary" type="button">Search</button>
-        </div>
-
-        <div id="btnGroup" class="btn-group" role="group" aria-label="Basic radio toggle button group"></div> -->
-
-            <!--Testing New Search API-->
-
         <div class=" testSearchDiv input-group ">
             <input type="text" onKeyUp="testSearch(event)"  list="datalistOptions" class="form-control" id="testinput" placeholder="Type to search for your stock..." aria-label="search" aria-describedby="search">
             <datalist id="datalistOptions">
                 <h5 value="Stock 0"></h5>
-                <!-- <option value="Stock 1">Test</option>
-                <option value="Stock 2">
-                <option value="Stock 3">
-                <option value="Stock 4">
-                <option value="Stock 5"> -->
             </datalist>
-
         </div>  
-       
-
         <div class="row " id="topHalf">
 
             <div class="col-md-4 ">
@@ -75,19 +55,32 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 my-4 cardData">
+                            <div class="col-md-5 my-4 cardData">
+                                <ul>
+                                    <li id="sharePrice">Share Price (USD):</li>
+                                    <li id="yearHigh">52 Week High: </li>
+                                    <li id="yearLow">52 Week Low: </li>
 
-                                <!-- <p id="dateNow">As of: </p> -->
-                                <p class="card-text" id="sharePrice">Share Price (USD):</p>
+                                </ul>
+
+                                <!-- <p class="card-text" id="sharePrice">Share Price (USD):</p>
                                 <p class="card-text" id="yearHigh">52 Week High: </p>
-                                <p class="card-text" id="yearLow">52 Week Low: </p>
+                                <p class="card-text" id="yearLow">52 Week Low: </p> -->
                             </div>
-                            <div class="col-md-6 my-4 cardData">
-                                <h5 class="mb-3"id="YOY">Year over Year</h5>
+                            <div class="col-md-7 my-4 cardData">
+                                <!-- <h5 class="mb-3"id="YOY">Year over Year</h5> -->
+                                <ul id="YOY">Year over Year
+                                    <li id="allEarnings">Quarter Earnings Growth:  <span
+                                        id="cardQEarnings"></span></li>
+                                    <li id="allRevenue">Quarter Rev Growth: <span
+                                        id="cardQRevenue"></span></li>
+                                </ul>
+
+<!-- 
                                 <p class="card-text" id="allEarnings">Quarter Earnings Growth: <span
                                     id="cardQEarnings"></span></p>
                                 <p class="card-text" id="allRevenue">Quarter Rev Growth: <span
-                                    id="cardQRevenue"></span></p>
+                                    id="cardQRevenue"></span></p> -->
                             </div>
                         </div>
                         <div class="row">
